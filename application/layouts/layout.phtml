@@ -1,0 +1,102 @@
+<?php 
+//init
+$auth=Zend_Auth::getInstance();
+$ua=new Zend_Http_UserAgent();
+$config = Zend_Registry::get('config');
+$news="";
+if ($config->local) $news='<li>le news non funzionano in locale</li>';
+else{
+	try {
+		$feed =Zend_Feed::import('http://blogpagliaccio.wordpress.com/category/progetti/toolraider/feed/');
+		$news="";
+		// Loop over each channel item and store relevant data
+		foreach ($feed as $item) {
+			$date=new DateTime($item->pubDate());
+			$news.='<li><span>'.$date->format("d/m/Y").'</span> <a href="'.$item->link().'">'.$item->title().'</a></li>';
+		}
+	} 
+	catch (Zend_Feed_Exception $e) {
+		$news='<li>le news non funzionano in locale</li>';
+	}
+}
+?><!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="DESCRIPTION" content="<?php echo $this->t->_('DESCRIPTION');?>" />
+		<meta name="KEYWORDS" content="imperion tools raid" />
+		<link rel="shortcut icon" href="<?php echo $this->baseUrl(); ?>/favicon.ico" /><?php
+	try {
+		$device=$ua->getDevice();
+		$mobile=$device->getFeature('is_mobile');
+	} catch (Zend_Http_UserAgent_Exception $e) {
+		$mobile=true;
+	}
+	echo $this->headLink()->prependStylesheet($this->baseUrl() . '/common/css/css.php'.($mobile? '?l=m' : ''));
+	echo $this->headScript()->prependFile($this->baseUrl('/common/js/js.php'));
+	echo '<script tipe="text/javascript">
+	<!--
+	var path="'.$this->baseUrl().'";
+	//-->
+	</script>';
+	$this->headTitle()->setSeparator(' - ');
+	$this->headTitle('Toolraider');
+	echo $this->headTitle();?>
+
+	</head>
+	<body>
+		<div id="header"><h1>Toolraider</h1>
+		<ul id="news">
+			<li><span>Toolraider</span><a href="http://blogpagliaccio.wordpress.com/category/progetti/toolraider/">News</a></li>
+			<?php echo $news;?>
+		</ul>
+		</div>
+		<div id="locale">language 
+			<form action="<?php echo $this->url();?>">
+				<select onchange="submit();" name="locale">
+					<option value="browser">auto</option>
+					<?php 
+					foreach ($this->t->getList() as $key => $value) {
+						echo '<option '.($_COOKIE['locale']==$key ? 'selected="selected"':'' ).' value="'.$key.'">'.$value.'</option>';
+					}
+					?>
+				</select>
+			</form>
+		</div>
+		<div id="container">
+	<?php 
+	if ($this->logger) {
+		$text="<ol>";
+		foreach ($this->logger as $value) {
+			$text.='<li class="priority'.$value['priority'].'">'.$value['timestamp'].' - '.$value['message'].' - '.$value['priorityName']."</li>";
+		}
+		$text.="</ol>";
+		echo $this->template()->spoiler($text,false,'log');
+	}
+	?>
+			<ul id="nav">
+				<li><a href="<?php echo $this->url(array('controller'=>"index",'action'=>'index'));?>">Home</a></li>
+		<?php 
+		//user
+		if ($auth->hasIdentity()) {
+			echo '
+				<li><a href="'.$this->url(array('controller'=>"login",'action'=>'logout')).'">logout</a></li>';
+		}
+		else {
+			echo '
+				<li><a href="'.$this->url(array('controller'=>"login",'action'=>'index')).'">login</a></li>
+				<li><a href="'.$this->url(array('controller'=>"reg",'action'=>'index')).'">'.$this->t->_('REG').'</a></li>';	
+		}/*<!--  <li><a href="<?php echo $this->url(array('controller'=>"create",'action'=>'index'));?>"><?php echo $this->t->_('CREATE');?></a></li>
+				<li><a href="<?php echo $this->url(array('controller'=>"edit",'action'=>'index'));?>"><?php echo $this->t->_('EDIT');?></a></li>
+			-->*/
+			?>
+				</ul>
+			<?php 
+			echo $this->layout()->content; ?>
+		</div>
+		<div id="footer">RINGRAZIAMENTI: a <b><a href="http://matt93.altervista.org" target="_blanc">matt93</a></b>, all'alleanza J.D. di imperion server 1 primo round e a DarckSimon per l'aiuto fornito <!--
+<b><u><a href="http://www.traviantrucchi.org" target="_blanc">TravianTrucchi</a></b></u>
+-->.<br />Le immagini sono concesse dalla TravianGames, proprietaria di tutti i diritti relativi ai contenuti. Questo sito non &egrave; gestito dalla TravianGames, e non &egrave; realizzato per scopi di lucro.
+		</div>
+	</body>
+</html>

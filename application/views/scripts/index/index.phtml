@@ -1,0 +1,32 @@
+<?php 
+//init
+
+?>
+
+<a href="mailto:toolraider@altervista.org">Contattami via email</a>
+
+<div id="contact">
+<form action="<?php echo $this->url(array('controller'=>"index",'action'=>'contact')); ?>" method="post" enctype="multipart/form-data">
+<div>
+<?php 
+if ($this->auth->hasIdentity()) {
+	echo $this->auth->getIdentity()->username;
+} else {
+    echo $this->t->_("LOGorEMAIL").' <a href="'.
+    $this->url(array('controller'=>"login",'action'=>'index')).'">login</a>
+    <input placeholder="email" name="email" required="required" type="email" size="40" />';
+}
+?></div>
+<?php
+$this->log->debug("identity ".print_r($this->auth->getIdentity(),true));
+$this->log->debug("has ".print_r($this->auth->hasIdentity(),true));
+echo '
+<div><input placeholder="'.$this->t->_("OBJECT").'" required="required" name="obj" size="40" maxlength="40" /></div>
+<div>invia immagini delle schermate
+<input type="file" name="upfile" /></div>
+<textarea placeholder="'.$this->t->_("WRITE").'" name="text" required="required" cols="30" rows="10"></textarea>
+<div><input type="submit" /></div>
+';
+?>
+</form>
+</div>

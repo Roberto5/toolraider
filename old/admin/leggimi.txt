@@ -1,0 +1,27 @@
+admin area
+
+funzioni:
+
+function eventiadmin()
+
+stampa un numero, oppure un immagine se accade qualcosa..
+
+index.php
+
+implementare un riassunto degli eventi del sito, tipo:
+
+    - segnalazioni bug
+    - suggerimenti
+    - altro... (ci verrà in mente)
+
+
+manutenzione php
+
+    - offline del sito "a scomparsa"
+    - riepilogo degli avvisi inviati agli utenti "a scomparsa" (già fatto)
+    - avvio di alcuni script per la manutenzione e date ultimo avvio "a scomparsa" (del tipo i cancella utenti inattivi)
+     
+     
+database.php
+
+dovra copiare la struttura del database in un file .sql e fare il download

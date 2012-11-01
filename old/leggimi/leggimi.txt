@@ -1,0 +1,77 @@
+sezioni del sito
+
+0 tutto
+1 admin
+2 cometetool
+3 shiptool
+4 ally
+5 liste e raid
+6 utenti
+7 tool vari
+
+
+razza
+
+1 titani
+
+2 terrestri
+
+3 Xen
+
+contatori azzerramento
+
+1 comete
+2 utenti
+
+script per la pulizia.
+
+rimozioni dati innutili
+
+clean.php?action=clean
+
+!!!!!!!!!!!!!codice su ogni pagina!!!!!!!!!!!!!!!!!!!!!
+
+<?php
+session_start(); 
+// per il login servono le veriabili di sessione
+include("functions.php");
+//funzioni
+include("my_config.php");
+// form di visualizzazione
+include("inc/foot.php");
+// inizio head di ogni pagina
+online();
+//controlla se la pagina deve essere online , come parametro passare la sezione del sito in cui è la pagg (0 default)
+Pagina_protetta();
+//limita l'accesso riservato solo agli utenti, con il parametro 1 agli utenti e agli sharer
+Pagina_protetta_admin();
+//limita l'accesso riservato solo agli admin
+
+//  <-------------qui ci vanno i javascript, tra l'include e la funzione menu ------------------->
+
+menu();
+// menu in alto nella pagina
+
+$_GET=inputctrl($_GET);
+$_POST=inputctrl($_POST);
+//controllo vettori di input contro il mysql injection da usare solo nel caso si usino variabili get o post nelle query
+//per parametri numerici usare il cast intero o  is_numeric()
+$numero=(int)$_POST['numero'];
+
+// codice da implementare
+
+foot();
+//piede pagina
+?>
+
+api jquery
+
+<script language="javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+
+codice per le api di google
+ABQIAAAAfKC-nO0HuM5wGd3DeApcrBS1oovni2DagzTGMoy7G1tWHw6UHhQBMXFHln11xRF2iHq14q6FO3VX0g
+
+
+clesse Db
+
+$Db=new db();

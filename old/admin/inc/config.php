@@ -1,0 +1,10 @@
+<?php
+@define("DATABASE","my_toolraider");
+@define("HOST","localhost");
+@define("USER","toolraider");
+@define("PASS","");
+$sito="toolraider";
+$urlsito="http://localhost";
+$web_mail="toolraider@altervista.org";
+$data_script="22.02.2010";
+?>

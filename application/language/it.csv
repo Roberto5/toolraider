@@ -1,0 +1,21 @@
+Value is required and can't be empty@Il campo deve essere pieno
+The two given tokens do not match@I due campi non coincidono
+Missing captcha fields@Compilare il campo captcha
+DESCRIPTION@Tools online per imperion
+USERNAME@Nome utente :
+ALNUM@Questo campo deve contenere solo lettere e numeri
+PASS_LENG@La password deve contenere 8 caratteri
+ENTER@Entra
+SUCCESS@login eseguito con successo
+LOGOUT@Logout eseguito con successo
+FAILURE@login fallito
+PASS_ERR@password errata
+USER_NOT_FOUND@Username inesistente
+GUEST@Visitatore
+CREATE@Crea
+EDIT@Modifica
+REG@Registrati
+E_FATAL@Fatal Error, contattare l'admin
+LOGorEMAIL@lasciacia una mail per essere ricontattato oppure fai
+OBJECT@oggetto
+WRITE@Scrivi il tuo messaggio qui
