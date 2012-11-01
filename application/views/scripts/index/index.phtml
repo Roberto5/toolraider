@@ -1,6 +1,8 @@
 <?php 
 //init
 
+//var_dump($this->t->getLocale());
+
 ?>
 
 <a href="mailto:toolraider@altervista.org">Contattami via email</a>
@@ -18,8 +20,8 @@ if ($this->auth->hasIdentity()) {
 }
 ?></div>
 <?php
-$this->log->debug("identity ".print_r($this->auth->getIdentity(),true));
-$this->log->debug("has ".print_r($this->auth->hasIdentity(),true));
+$this->log->debug($this->auth->getIdentity());
+$this->log->debug($this->auth->hasIdentity());
 echo '
 <div><input placeholder="'.$this->t->_("OBJECT").'" required="required" name="obj" size="40" maxlength="40" /></div>
 <div>invia immagini delle schermate

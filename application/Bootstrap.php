@@ -17,6 +17,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 		// viene restituto l'oggetto per essere utilizzato e memorizzato nel bootstrap
 		return $autoLoader;
 	}
+	
 	protected function _initParams() {
 		$this->bootstrap('autoload');
 		$this->bootstrap('db');
