@@ -1,0 +1,8 @@
+<?php 
+
+if ($this->text) echo $this->template('Alerts',array('text'=>$this->text,'type'=>$this->type));
+
+echo $this->t->_('RECOVER');
+?>
+<form action="./" method="post">
+<input type="email" name="email" /><input type="submit"></form>

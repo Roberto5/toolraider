@@ -74,7 +74,7 @@ class RegController extends Zend_Controller_Action
     public function activeAction() {
     	$code=$this->_getParam('code');
     	$code=$code ? sha1($code):null;
-    	$user=new Model_user(0,$code);
+    	$user=new Model_user(array('code'=>$code));
     	$this->_log->debug(print_r($user->data,true));
     	if ($user->data && ($user->data->code_time+86400)<time()) {
     		$auth=Zend_Auth::getInstance();
@@ -93,7 +93,7 @@ class RegController extends Zend_Controller_Action
     public function resendAction() {
     	include_once APPLICATION_PATH.'/language/email.php';
     	$locale=$this->_t->getLocale();
-    	$user=new Model_user(0,$this->_getParam('code'));
+    	$user=new Model_user(array('code'=>$this->_getParam('code')));
     	if ($user->data) {
     		$this->view->email=$user->data['email'];
     		if ($this->getRequest()->isPost()) {
@@ -109,11 +109,11 @@ class RegController extends Zend_Controller_Action
     					->setFrom(WEBMAIL, SITO)
     					->setBodyHtml(
     						str_replace('{link}', $conf->url.$this->view->baseUrl('reg/active/code/'.$code),
-    								str_replace('{user}', $user->data['username'], $message[$locale]['html'])))
+    								str_replace('{user}', $user->data['username'], $message[$locale]['reg']['html'])))
     					->setBodyText(
     						str_replace('{link}', $conf->url.$this->view->baseUrl('reg/active/code/'.$code),
-    								str_replace('{user}', $$user->data['username'], $message[$locale]['text'])))
-    					->setSubject($message[$locale]['obj'])
+    								str_replace('{user}', $user->data['username'], $message[$locale]['reg']['text'])))
+    					->setSubject($message[$locale]['reg']['obj'])
     					->send();
     				}
     				$this->view->text=$this->_t->_("CTRL_MAIL");

@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 class LoginController extends Zend_Controller_Action
 {
@@ -7,16 +7,18 @@ class LoginController extends Zend_Controller_Action
     {
         /* Initialize action controller here */
     }
-
+/**
+ * @todo controllare se l'utente è attivato oppure no.
+ */
     public function indexAction()
     {
     	$form = new Form_LoginForm();
-        $form->setAction($this->view->url(array('controller' => 'login', 
+        $form->setAction($this->view->url(array('controller' => 'login',
     'action' => 'index')));
         $this->view->type = 0;
         $this->view->form = $form;
         if ($this->getRequest()->isPost()) {
-            //Se il form è valido, lo processiamo   
+            //Se il form è valido, lo processiamo
             if ($form->isValid($_POST)) {
                 //recuperiamo i dati così .....
                 $user = $this->getRequest()->getParam(
@@ -33,7 +35,7 @@ class LoginController extends Zend_Controller_Action
                 $adapter->setCredential($password);
                 $result = $adapter->authenticate();
                 if ($result->isValid()) {
-                    $user = $adapter->getResultRowObject(array('id', 
+                    $user = $adapter->getResultRowObject(array('id',
                     'username'));
                     $auth->getStorage()->write(
                     $user);
@@ -56,8 +58,8 @@ class LoginController extends Zend_Controller_Action
                             break;
                     }
                 }
-            } 
-            else 
+            }
+            else
                 $this->view->form->populate($_POST);
         }
     }
@@ -69,7 +71,81 @@ class LoginController extends Zend_Controller_Action
             $auth->clearIdentity();
     }
 
-// @todo add recovery 
+// @todo add recovery
+	public function recoverAction() {
+		$code=$this->_getParam('code');
+		if ($this->getRequest()->isPost()) {
+			$v=new Zend_Validate();
+			$v->addValidator(new Zend_Validate_EmailAddress());
+			$v->addValidator(new Zend_Validate_Db_RecordExists(array('table'=>PREFIX.'user','field'=>'email')));
+			$this->view->type=2;
+			if ($v->isValid($_POST['email'])) {
+				$user=new Model_user(array('email'=>$_POST['email']));
+				$code=$this->genrandpass();
+				$user->updateU(array('code'=>sha1($code)));
+				$this->view->type=1;
+				if (!$conf->local) {
+					include_once APPLICATION_PATH.'/language/email.php';
+					$locale=$this->_t->getLocale();
+					$sender = new Zend_Mail();
+					$sender->addTo($_POST['email'])
+					->setFrom(WEBMAIL, SITO)
+					->setBodyHtml(
+							str_replace('{link}', $conf->url.$this->view->baseUrl('login/recover/code/'.$code),
+									$message[$locale]['rec']['html']))
+									->setBodyText(
+											str_replace('{link}', $conf->url.$this->view->baseUrl('login/recover/code/'.$code),
+													 $message[$locale]['rec']['text']))
+													->setSubject($message[$locale]['rec']['obj'])
+													->send();
+					$this->view->text=$this->_t->_('CTRL_MAIL');
+
+				}
+				else $this->view->text=str_replace('{link}', $conf->url.$this->view->baseUrl('login/recover/code/'.$code),
+									$message[$locale]['rec']['html']);
+			}
+			else {
+				$this->view->text=$v->getMessages();
+
+			}
+		}
+		elseif ($code) {
+			$this->view->type=1;
+			$code=sha1($code);
+			$user=new Model_user(array('code'=>$code));
+			$pass=$this->genrandpass();
+			$user->updateU(array('code'=>'','password'=>sha1($pass)));
+			if (!$conf->local) {
+				include_once APPLICATION_PATH.'/language/email.php';
+				$locale=$this->_t->getLocale();
+				$sender = new Zend_Mail();
+				$sender->addTo($user->data['email'])
+				->setFrom(WEBMAIL, SITO)
+				->setBodyHtml(
+						str_replace(array('{pass}','{user}'), array($pass,$user->data['username']),
+								$message[$locale]['pass']['html']))
+								->setBodyText(
+										str_replace(array('{pass}','{user}'), array($pass,$user->data['username']),$message[$locale]['pass']['text']))
+												->setSubject($message[$locale]['pass']['obj'])
+												->send();
+				$this->view->text=$this->_t->_('CTRL_MAIL');
+
+			}
+			else $this->view->text=str_replace(array('{pass}','{user}'), array($pass,$user->data['username']),
+								$message[$locale]['pass']['html']);
+		}
+	}
+	/**
+	 * generate random string 8 char lenght
+	 * @return string
+	 */
+	private function genrandpass() {
+		$code = "";
+		for ($i = 0; $i < 8; $i ++) {
+			$code .= (rand(0, 1) ? chr(rand(65, 122)) : rand(0, 9));
+		}
+		return $code;
+	}
 }
 
 

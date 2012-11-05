@@ -28,6 +28,7 @@ back: #071221
 	position:fixed;
 	text-align:center;
 	background: black;
+	width: 100%;
 }
 #locale {
 	top:0px;
@@ -75,15 +76,6 @@ abbr {
 	border-bottom: 1px dashed #999;
 }
 
-/*colore dei form input
-normal: #2974dd
-over: #49d7ff
-inactive: #0a1723
-
-text input: #003d4d
-border: #3eaeee
-
-*/
 input {
 	color: white;
 	background:#0a1723;
@@ -131,6 +123,45 @@ button:hover,input[type="submit"]:hover,input[type="button"]:hover {
 	margin: 0 auto;
 	width: 350px;
 	text-align: center;
+}
+
+/*log*/
+
+#log ol{
+	background-color: gray;
+}
+
+#log li {
+	border: 1px solid white;
+	color:black;
+}
+/*emerg*/
+#log li.priority1 {
+	background-color:red;
+}
+/*crit*/
+#log li.priority2 {
+	background-color:red;
+}
+/*err*/
+#log li.priority3 {
+	background-color:red;
+}
+/*warn*/
+#log li.priority4 {
+	background-color:orange;
+}
+/*notice*/
+#log li.priority5 {
+	background-color:yellow;
+}
+/*info*/
+#log li.priority6 {
+	background-color:blue;
+}
+/*debug*/
+#log li.priority7 {
+	background-color:white;
 }
 
 /* style avvisi */
@@ -193,19 +224,9 @@ button:hover,input[type="submit"]:hover,input[type="button"]:hover {
     color: yellow;
 }
 
-/*tabella delle funzioni ok e errore*/
-#table_center{
-height:100px;
-width:500px;
-margin-top: -50px;
-margin-left: -250px;
-left:50%;
-top:50%;
-position:absolute;
-color: black;
-} 
 
-/*stile del shiptool*/
+/*stile del shiptool 
+@todo da rivedere*/
 .itable
 {
     color: black;
@@ -315,37 +336,3 @@ TABLE TR TD.spacer {
 	border-color:#777;
 }
     
-/*feed rss*/
-
-.titlefield{ /*CSS for RSS title link in general*/
-text-decoration: none;
-color: lime;
-}
-
-.labelfield{ /*CSS for label field in general*/
-color: green;
-font-size: 90%;
-}
-
-.datefield{ /*CSS for date field in general*/
-color: white;
-font-size: 90%;
-}
-
-#feed{ /*Demo 3 main container*/
-width: 250px;
-height: 280px;
-border: 1px solid gray;
-padding: 4px;
-background-color: black;
-position: absolute !important; 
-top: 300px; 
-right: 10px;
-}
-
-#feed div p{ /*Demo 3 P element that separates each entry*/
-margin-top: 0;
-margin-bottom: 7px;
-color: green;
-
-}

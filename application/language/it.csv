@@ -17,9 +17,11 @@ CREATE@Crea
 EDIT@Modifica
 REG@Registrati
 E_FATAL@Fatal Error, contattare l'admin
-LOGorEMAIL@lasciacia una mail per essere ricontattato oppure fai
+LOGorEMAIL@lasciaci un email per essere ricontattato oppure fai
 OBJECT@oggetto
 WRITE@Scrivi il tuo messaggio qui
 CONTACT@Contattaci
 EMAIL_CONTACT@Contattaci per email
 FORM_CONTACT@Oppure compila questo modulo
+CTRL_MAIL@Email inviata con successo, controlla la casella di posta
+RECOVER@Inserisci l'email dell'account da recuperare

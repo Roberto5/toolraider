@@ -19,14 +19,19 @@ class Model_user extends Zend_Db_Table_Abstract {
 	/**
 	 * @param int $ID
 	 */
-	function __construct ($ID = 0,$code=false)
+	static private $instance;
+	function __construct ($option)
 	{
+		if (is_int($option)) $query="`id`='$option'";
+		elseif (is_array($option)) $query=$option;
 		$this->_name=PREFIX.'user';
 		parent::__construct();
-		$ID = intval($ID);
-		if ($code) $query="`code`='$code'";
-		else $query="`id`='$ID'";
 		$this->data= $this->fetchRow($query);
+		self::$instance=$this;
+	}
+	static function getInstance($option=null) {
+		if (self::$instance) return self::$instance;
+		else return new Model_user($option);
 	}
 	/**
 	 * registra un utente, ritorna true se la registrazione &egrave; andata bene.

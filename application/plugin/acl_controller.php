@@ -25,8 +25,15 @@ class plugin_acl_controller extends Zend_Controller_Plugin_Abstract
         $privilege = $request->getActionName();
         $module = $request->getModuleName();
         // assegno un ruolo
-        if ($auth->hasIdentity())
+        if ($auth->hasIdentity()) {
             $role = Model_role::getRole();
+            $user=Model_user::getInstance();
+            if ($user->data['active']!='1') {
+            	$request->setModuleName('default')
+            	->setControllerName('reg')
+            	->setActionName('resend');
+            } 
+        }
         else
             $role = 'guest';
         ob_start();

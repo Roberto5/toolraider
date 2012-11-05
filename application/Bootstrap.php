@@ -42,6 +42,12 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 		$storage = new Zend_Auth_Storage_Session();
 		$auth = Zend_Auth::getInstance();
 		$auth->setStorage($storage);
+		if ($auth->hasIdentity()) {
+			$this->bootstrap('log');
+			$log=$this->getResource('log');
+			$user=new Model_user(intval($auth->getIdentity()->id));
+			//Zend_Registry::set('user', $user);
+		}
 	}
 	/**
 	 * set language of application

@@ -37,12 +37,10 @@ class Plugin_Logweb extends Zend_Log_Writer_Abstract {
 			return " boolean '".($data ? 'true':'false')."' ";
 		}
 		elseif (is_object($data)) {
-			$array=get_object_vars($data);
 			$text=' <summary><b>Object '.get_class($data).'</b><details>';
-			foreach ($array as $key => $value) {
-				$text.="<div>[$key]=>".$this->format($value)."</div>";
-			}
+			$text.='<pre>'.print_r($data,true).'</pre>';
 			$text.='</details></summary> ';
+			
 			return $text;
 		}
 		elseif (is_null($data)) {
