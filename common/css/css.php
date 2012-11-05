@@ -58,8 +58,12 @@ if ($_GET['l'] == 'm') {
 } else {
     $layout = 'style.css';
 }
-$css=array('jquery.contextmenu.css','jquery.lightbox-0.5.css','scroll.css');
-//'jquery-ui-1.8.11.custom.css'
+$css=array(
+		'jquery.contextmenu.css',
+		'jquery.lightbox-0.5.css',
+		'jquery-ui.css',
+		'scroll.css');
+
 $r = dump_css_cache($layout);
 $display = $r['text'];
 $mtime = $r['mtime'];
@@ -68,6 +72,7 @@ foreach ($css as $value) {
 	$display .= $r['text'];
 	if ($mtime < $r['mtime']) $mtime = $r['mtime'];
 }    
+//$display.=file_get_contents('jquery-ui-1.8.11.custom.css');
 header('Last-Modified: ' . gmdate('D, d M Y H:i:s', $mtime) . ' GMT');
 echo $display;
 ?>

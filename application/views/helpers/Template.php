@@ -17,17 +17,12 @@ class Zend_View_Helper_Template extends Zend_View_Helper_Abstract
      */
     public $view;
     public $baseUrl;
-    /**
-     * 
-     * @var Model_civilta
-     */
-    private $civ;
-    function __construct ()
+    function __construct ($baseUrl=false)
     {
         $this->view = new Zend_View();
         $config=Zend_Registry::get("config");
         
-        if ($config->local) $this->baseUrl ="/gifeditor";
+        if ($config->local || $baseUrl) $this->baseUrl =$baseUrl ? $baseUrl : "/toolraider";
         else {
         	$baseurl = new Zend_View_Helper_BaseUrl();
         	$this->baseUrl = $baseurl->baseUrl();
@@ -37,13 +32,18 @@ class Zend_View_Helper_Template extends Zend_View_Helper_Abstract
      * 
      * @return Zend_View_Helper_template
      */
-    public function template ()
-    {
-        if (! $this->baseUrl) {
-            $baseurl = new Zend_View_Helper_BaseUrl();
-            $this->baseUrl = $baseurl->baseUrl();
+    public function template ($template=null,$option=array())
+    { 
+    	if ($template) {
+    		return $this->$template($option);
+    	}
+        else {
+        	if (! $this->baseUrl) {
+            	$baseurl = new Zend_View_Helper_BaseUrl();
+            	$this->baseUrl = $baseurl->baseUrl();
+        	}
+        	return $this;
         }
-        return $this;
     }
     /**
      * avvisi
@@ -55,6 +55,12 @@ class Zend_View_Helper_Template extends Zend_View_Helper_Abstract
      */
     public function Alerts ($text, $link = null, $type = 1, $sec = 0)
     {
+    	if (is_array($text)) {
+    		$link=$text['link'];
+    		$type=$text['type'] ? $text['type'] : 1 ;
+    		$sec=$text['sec'];
+    		$text=$text['text'];
+    	}
         $html = "";
         $t = Zend_Registry::get('translate');
         $sec = (int) $sec;
@@ -68,7 +74,7 @@ class Zend_View_Helper_Template extends Zend_View_Helper_Abstract
                 break;
         }
         if ($link) $text=' <a href="' . $link . '">'.$text.'</a>';
-        $html .= '<div style="padding: 0pt 0.7em;" class="' . $class[0] .
+        $html .= '<div style="padding: 0pt 0.7em;width: 350px;margin: 0 auto;" class="' . $class[0] .
          ' ui-corner-all"> 
 				<p>
  				<span style="float: left; clear:both; margin-right: 0.3em;" class="ui-icon ' .
@@ -92,15 +98,11 @@ class Zend_View_Helper_Template extends Zend_View_Helper_Abstract
      */
     function spoiler ($content, $status = false,$label="")
     {
-        /*$this->ids ++;
-        $html = '<a href="javascript:;" onclick="if ($(\'#spoiler' . $this->ids .
-         '\').css(\'display\')==\'block\') $(\'#spoiler' . $this->ids .
-         '\').css(\'display\',\'none\'); else $(\'#spoiler' . $this->ids .
-         '\').css(\'display\',\'block\');">' . ($status ? $hide : $show) . '</a>
-            <div id="spoiler' . $this->ids . '" ' .
-         (! $status ? 'style="display:none;"' : "") . ' >';
-        $html .= $content;
-        $html .= '</div>';*/
+    	if (is_array($content)) {
+    		$status=$content['status'];
+    		$label=$content['label'];
+    		$content=$content['content'];
+    	}
     	$html='<summary '.($label? 'id="'.$label.'"':'').'><b>'.$label.'</b><details "'.($status? 'open="true"':'').'">'.$content.'</details></summary>';
         return $html;
     }

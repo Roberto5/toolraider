@@ -38,21 +38,21 @@ class LoginController extends Zend_Controller_Action
                     $auth->getStorage()->write(
                     $user);
                     $this->view->type = 1;
-                    $this->view->text = $this->_t->_("SUCCESS");
+                    $this->view->text = $this->view->template('Alerts',array('text'=>$this->_t->_("SUCCESS"),'type'=>1,'link'=>$this->view->baseUrl(),'sec'=>5));
                 } else {
                 	$this->view->type = 2;
                		switch ($result->getCode()) {
                         case Zend_Auth_Result::FAILURE:
-                            $this->view->text = $this->_t->_("FAILURE");
+                            $this->view->text = $this->view->template('Alerts',array('text'=>$this->_t->_("FAILURE"),'type'=>2));
                             break;
                         case Zend_Auth_Result::FAILURE_CREDENTIAL_INVALID:
-                            $this->view->text = $this->_t->_("PASS_ERR");
+                            $this->view->text = $this->view->template('Alerts',array('text'=>$this->_t->_("PASS_ERR").'. '.$this->_t->_('LOST_PASS'),'link'=>$this->view->baseUrl('login/recover'),'type'=>2));
                             break;
                         case Zend_Auth_Result::FAILURE_IDENTITY_NOT_FOUND:
-                            $this->view->text = $this->_t->_("USER_NOT_FOUND");
+                            $this->view->text = $this->view->template('Alerts',array('text'=>$this->_t->_("USER_NOT_FOUND"),'type'=>2));
                             break;
                         case Zend_Auth_Result::FAILURE_UNCATEGORIZED:
-                            $this->view->text = $result->getMessages();
+                            $this->view->text = $this->view->template('Alerts',array('text'=>$result->getMessages(),'type'=>2));
                             break;
                     }
                 }

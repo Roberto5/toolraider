@@ -9,7 +9,8 @@ ENTER@Entra
 SUCCESS@login eseguito con successo
 LOGOUT@Logout eseguito con successo
 FAILURE@login fallito
-PASS_ERR@password errata
+PASS_ERR@Password errata
+LOST_PASS@Hai dimenticato la password?
 USER_NOT_FOUND@Username inesistente
 GUEST@Visitatore
 CREATE@Crea
@@ -19,3 +20,6 @@ E_FATAL@Fatal Error, contattare l'admin
 LOGorEMAIL@lasciacia una mail per essere ricontattato oppure fai
 OBJECT@oggetto
 WRITE@Scrivi il tuo messaggio qui
+CONTACT@Contattaci
+EMAIL_CONTACT@Contattaci per email
+FORM_CONTACT@Oppure compila questo modulo

@@ -20,6 +20,7 @@ class Model_params extends Zend_Db_Table_Abstract {
 	function __construct() {
 		$this->_name=PREFIX.'params';
 		parent::__construct();
+		$this->getall();
 	}
 	/**
 	 * 
@@ -38,17 +39,14 @@ class Model_params extends Zend_Db_Table_Abstract {
      * @param Mixed $default valore di default
      * @return mixed
      */
-    function get($name,$default=0,$refresh=false)
+    function get($name,$default=null,$refresh=false)
     {
-        
-        if (isset ($this->$name)&&!$refresh) $default=$this->$name;
-        else {
-            $r=$this->getDefaultAdapter()->fetchOne("SELECT `value` FROM `".$this->_name."` WHERE `name`='".$name."'");
-            if ($r) {
-                $default=$r;
-            }
-            $this->$name=$default;
+        if ($refresh) {
+        	$row=$this->fetchRow("`name`='$name'");
+        	if ($row) $this->$name=$row['value'];
+        	else $this->$name=$default;
         }
+        if (isset ($this->$name)) $default=$this->$name;
         return $default;
     }
     /**
@@ -58,8 +56,8 @@ class Model_params extends Zend_Db_Table_Abstract {
      */
     function set($name,$value)
     {
+    	if (isset($this->$name)) $this->update(array('value'=>$value), "`name`='$name'");
+        else $this->getDefaultAdapter()->insert($this->_name,array("name"=>$name , "value"=>$value));
         $this->$name=$value;
-        $this->getDefaultAdapter()->delete($this->_name,"`name`='".$name."'");
-        $this->getDefaultAdapter()->insert($this->_name,array("name"=>$name , "value"=>$value));
     }
 }

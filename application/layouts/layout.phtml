@@ -16,7 +16,7 @@ else{
 		}
 	} 
 	catch (Zend_Feed_Exception $e) {
-		$news='<li>le news non funzionano in locale</li>';
+		$news="<li>$e</li>";
 	}
 }
 ?><!DOCTYPE html>
@@ -41,8 +41,8 @@ else{
 	</script>';
 	$this->headTitle()->setSeparator(' - ');
 	$this->headTitle(SITE);
-	echo $this->headTitle();?>
-
+	echo $this->headTitle();
+?>
 	</head>
 	<body>
 		<div id="header"><h1>Toolraider</h1>

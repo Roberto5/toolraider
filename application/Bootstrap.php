@@ -131,6 +131,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 	 	$front->registerPlugin(new plugin_acl_controller($acl));
 	 	Zend_Registry::set("acl", $acl);
 	 }
+	 
 	 protected function _initView()
 	 {
 	 // Initialize view

@@ -5,8 +5,12 @@
 
 ?>
 
-<a href="mailto:toolraider@altervista.org">Contattami via email</a>
+<sumary style="text-align:center;"><h2><?php echo $this->t->_('CONTACT');?></h2>
+<details>
 
+<a href="mailto:toolraider@altervista.org"><?php echo $this->t->_('EMAIL_CONTACT');?></a>
+
+<h3><?php echo $this->t->_('FORM_CONTACT');?></h3>
 <div id="contact">
 <form action="<?php echo $this->url(array('controller'=>"index",'action'=>'contact')); ?>" method="post" enctype="multipart/form-data">
 <div>
@@ -19,6 +23,7 @@ if ($this->auth->hasIdentity()) {
     <input placeholder="email" name="email" required="required" type="email" size="40" />';
 }
 ?></div>
+
 <?php
 $this->log->debug($this->auth->getIdentity());
 $this->log->debug($this->auth->hasIdentity());
@@ -32,3 +37,5 @@ echo '
 ?>
 </form>
 </div>
+</details>
+</sumary>
