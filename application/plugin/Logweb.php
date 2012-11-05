@@ -11,14 +11,15 @@ class Plugin_Logweb extends Zend_Log_Writer_Abstract {
 		$this->_write($event);
 	}
 	protected function _write($event) {
-		$event['message']=$this->format($event['message']);
+		$event['message']=$this->format($event['message'],$event['info']);
 		$this->layout->logger[]=$event;
 	}
 	static function factory($config) {
 		$web=new Plugin_Logweb();
 		return $web;
 	}
-	private function format($data) {
+	private function format($data,$label='') {
+		//if ($label) $label="Value of '$label' is : ";
 		if (is_string($data)) {
 			return " String(".strlen($data).") '$data'";
 		}

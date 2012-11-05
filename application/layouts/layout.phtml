@@ -68,7 +68,7 @@ else{
 	if ($this->logger) {
 		$text="<ol>";
 		foreach ($this->logger as $value) {
-			$text.='<li class="priority'.$value['priority'].'">'.$value['timestamp'].' - '.$value['message'].' - '.$value['priorityName']."</li>";
+			$text.='<li class="priority'.$value['priority'].'"><b>'.$value['info'].'</b> : '.$value['timestamp'].' - '.$value['message'].' - '.$value['priorityName']."</li>";
 		}
 		$text.="</ol>";
 		echo $this->template()->spoiler($text,false,'log');
