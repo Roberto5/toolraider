@@ -25,8 +25,6 @@ if ($this->auth->hasIdentity()) {
 ?></div>
 
 <?php
-$this->log->debug($this->auth->getIdentity(),'identity');
-$this->log->debug($this->auth->hasIdentity(),'has identity');
 echo '
 <div><input placeholder="'.$this->t->_("OBJECT").'" required="required" name="obj" size="40" maxlength="40" /></div>
 <div>invia immagini delle schermate

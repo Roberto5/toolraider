@@ -42,12 +42,9 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 		$storage = new Zend_Auth_Storage_Session();
 		$auth = Zend_Auth::getInstance();
 		$auth->setStorage($storage);
-		if ($auth->hasIdentity()) {
-			$this->bootstrap('log');
-			$log=$this->getResource('log');
+		//$this->bootstrap('log');$log=$this->getResource('log');
+		if ($auth->hasIdentity()) 
 			$user=new Model_user(intval($auth->getIdentity()->id));
-			//Zend_Registry::set('user', $user);
-		}
 	}
 	/**
 	 * set language of application
@@ -130,11 +127,13 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 	 */
 	 protected function _initController ()
 	 {
-	 	require_once 'application/plugin/acl_controller.php';
+	 	require_once APPLICATION_PATH.'/plugin/acl_controller.php';
+	 	require_once APPLICATION_PATH.'/plugin/myTmpEng.php';
 	 	$acl = null;
 	 	include_once (APPLICATION_PATH . "/models/acl.php");
 	 	$front = Zend_Controller_Front::getInstance();
-	 	$front->registerPlugin(new plugin_acl_controller($acl));
+	 	$front->registerPlugin(new plugin_acl_controller($acl))->registerPlugin(new plugin_myTmpEng(Zend_Controller_Action_HelperBroker::getStaticHelper(
+	 'ViewRenderer')));
 	 	Zend_Registry::set("acl", $acl);
 	 }
 	 
@@ -145,6 +144,9 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 	 	$view = new Zend_View();
 	 	//include_once APPLICATION_PATH . "/views/helpers/Image.php";
 	 	include_once APPLICATION_PATH . "/views/helpers/Template.php";
+	 	include_once APPLICATION_PATH.'/plugin/Tmpeng.php';
+	 	$view->addFilter('Tmpeng')->addFilterPath(APPLICATION_PATH.'/plugin');
+	 	
 	 	//$img = new Zend_View_Helper_image();
 	 	$tmp = new Zend_View_Helper_template();
 	 //$mymenu=new Zend_View_Helper_MyMenu();

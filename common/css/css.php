@@ -52,7 +52,7 @@ function dump_css_cache ($filename)
     }
     return array('text' => $cache_contents, 'mtime' => $stat['mtime']);
 }
-if ($_GET['l'] == 'm') {
+if (isset($_GET['l']) && ($_GET['l'] == 'm')) {
     $layout = 'mobile.css';
   
 } else {

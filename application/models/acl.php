@@ -15,7 +15,7 @@ $acl->addResource("default");
 
 //controller
 $acl->addResource("log");
-
+$acl->addResource("alliance");
 
 //altro
 $acl->addResource("debug");
@@ -25,6 +25,7 @@ $acl->addResource("debug");
 $acl->allow("guest","default");
 $acl->deny("guest","debug");
 $acl->deny("guest","log");
+$acl->deny("guest","alliance");
 
 
 //permessi staff

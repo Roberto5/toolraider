@@ -16,20 +16,28 @@ class Model_user extends Zend_Db_Table_Abstract {
 	 * @var Zend_Db_Table_Row_Abstract
 	 */
 	public $data;
-	/**
-	 * @param int $ID
-	 */
 	static private $instance;
+	/**
+	 * 
+	 * @var Model_ally
+	 */
+	public $ally;
+	public $role;
 	function __construct ($option)
 	{
-		if (is_int($option)) $query="`id`='$option'";
-		elseif (is_array($option)) $query=$option;
 		$this->_name=PREFIX.'user';
 		parent::__construct();
+		if (is_int($option)) $query="`id`='$option'";
+		elseif (is_array($option)) $query=$option;
+		else throw new Zend_Db_Table_Exception(' $option params is not int or array');
 		$this->data= $this->fetchRow($query);
+		if ($this->data['aid']) {
+			$this->ally=new Model_ally($this->data['aid']);
+			$this->role=$this->getAdapter()->fetchOne("SELECT `role` FROM `".PREFIX."ally_role` WHERE `uid`='".$this->data['id']."'");
+		}
 		self::$instance=$this;
 	}
-	static function getInstance($option=null) {
+	static function getInstance($option=0) {
 		if (self::$instance) return self::$instance;
 		else return new Model_user($option);
 	}
@@ -59,9 +67,17 @@ class Model_user extends Zend_Db_Table_Abstract {
 			if (isset($data['code'])) {
 				$data['code_time']=time();
 			}
-			return $this->update($data,"`uid`='".$this->data['uid']."'");
+			return $this->update($data,"`id`='".$this->data['id']."'");
 		}
 		return false;
+	}
+	function allyRequest($aid) {
+		$this->updateU(array('aid'=>$aid));
+		$this->getAdapter()->insert(PREFIX.'ally_role', array('uid'=>$this->data['id'],'aid'=>$aid));
+	}
+	function leaveAlly() {
+		$this->getAdapter()->delete(PREFIX.'ally_role',array('aid'=>$this->data['aid']));
+		$this->updateU(array('aid'=>0));
 	}
 }
 ?>

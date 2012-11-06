@@ -28,7 +28,8 @@ class plugin_acl_controller extends Zend_Controller_Plugin_Abstract
         if ($auth->hasIdentity()) {
             $role = Model_role::getRole();
             $user=Model_user::getInstance();
-            if ($user->data['active']!='1') {
+            if (($user->data['active']!='1')&& (($request->getControllerName()!='reg')&&($request->getControllerName()!='login'))) {
+            	$log->notice('user inactive');
             	$request->setModuleName('default')
             	->setControllerName('reg')
             	->setActionName('resend');
@@ -65,5 +66,6 @@ class plugin_acl_controller extends Zend_Controller_Plugin_Abstract
                 ->setActionName('error')->setParam("error", "access deny");
         }
     }
+
 }
 ?>

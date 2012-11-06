@@ -1,0 +1,90 @@
+<?php 
+function length_array($array) {
+	if (is_array($array)) {
+		$n=0;
+		foreach ($array as $value) {
+			$n++;
+		}
+		return $n;
+	}
+	else return '0';
+}
+$this->key=array('{ally_name}'=>$this->ally->data['name'],
+		'{name}'=>$this->t->_('NAME'),
+		'{description}'=>$this->t->_('DESCRIPTION2'),
+		'{ally_desc}'=>$this->ally->data['description'],
+		'{member}'=>$this->t->_('MEMBER'),
+		'{num}'=>length_array($this->ally->members)
+);
+
+//Zend_View_Filter_Tmpeng::addkey($this->key);
+
+if ($this->pending) {
+	echo '<center>Sei in attesa che l\'ally {ally_name} ti accetti<br />
+puoi ritirare la richiesta cliccando <a href="'.$this->url(array('action'=>'leave','aid'=>$this->ally->data['id'])).'" >qui</a>
+</center>';
+}
+elseif ($this->ally) {// descrizione ally visibile solo agli alleati
+
+?>
+
+	<table border="1" bgcolor="black">
+		<tr>
+			<td><b>{name}</b></td>
+			<td>{ally_name}</td>
+		</tr>
+		<tr>
+			<td><b>{description}</b></td>
+			<td><a href="#">Modifica profilo</a>{ally_desc}</td></tr>
+		<tr>
+			<td><b>{member}</b></td>
+			<td>{num}</td>
+		</tr>
+<!-- lista utenti -->
+</table>
+
+<?php /* @todo ri implementare mappa
+<a href="map.php?ally=".$ally."&resize=1&g=1" rel="thumbnail" title="mappa">
+<img class="image" width="200" height="200" src="map.php?ally=".$ally."&resize=1&g=1" title="G1" /></a>
+
+<a href="map.php?ally=".$ally."&resize=1&g=2" rel="thumbnail" title="mappa">
+<img class="image" width="200" height="200" src="map.php?ally=".$ally."&resize=1&g=2" title="G2" /></a>
+
+<a href="map.php?ally=".$ally."&resize=1&g=3" rel="thumbnail" title="mappa">
+<img class="image" width="200" height="200" src="map.php?ally=".$ally."&resize=1&g=3" title="G3" /></a>
+
+$pianeti=$Db->totable("SELECT `us_pianeti`.* , `us_player`.`nome` FROM `us_pianeti` , `us_player` WHERE `alleanza`='".$ally."' AND `nome`=`us_pianeti`.`id`");
+$maxx=0;$maxy=0;$i=0;$minx=0;$miny=0;
+while($pianeti[$i])
+{
+	$minx= $pianeti[$i]['x'] < $minx ? $pianeti[$i]['x'] : $minx ;
+	$miny= $pianeti[$i]['y'] < $miny ? $pianeti[$i]['y'] : $miny ;
+	$maxx= $pianeti[$i]['x'] > $maxx ? $pianeti[$i]['x'] : $maxx ;
+	$maxy= $pianeti[$i]['y'] > $maxy ? $pianeti[$i]['y'] : $maxy ;
+	$i++;
+}
+$max=$maxx > $maxy ? $maxx : $maxy;
+$min=$minx < $miny ? $minx : $miny;
+$min=0-$min;
+$max=$max > $min ? $max : $min ;
+$max++;
+$gr=intval(400/$max);
+echo "<map name="map" id="map">";
+for($i=0;$pianeti[$i];$i++)
+{
+$x=intval($pianeti[$i]['x']*400/$max);
+$off=intval(400);
+$y=intval($pianeti[$i]['y']*400/$max);
+$off2=$off+$gr;
+$r=intval($gr/2);
+echo "<area shape="circle" coords="".($off+$x).",".($off-$y).",".$r."" title="".$pianeti[$i]['nome']."`s ".$pianeti[$i]['nome_pianeta']."(".$pianeti[$i]['x'].",".$pianeti[$i]['y'].")"."" href="#" />";
+}
+echo "</map>";*/
+
+}
+else {
+echo '<center>al momento sei senza alleanza, puoi <a href="ally.php?action=cerca">cercarne</a> una o <a href="ally.php?action=crea">crearla</a></center>';
+
+
+}
+?>
