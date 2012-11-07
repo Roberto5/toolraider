@@ -1,5 +1,16 @@
 $(function(){
 	$("ul#news").liScroll();
+	$("button:not(.edit):not(.add)").button();
+	$("button.edit").button({icons: {
+        primary: "ui-icon-wrench"
+    },
+    text: false
+    });
+	$("button.add").button({icons: {
+        primary: "ui-icon-plus"
+    },
+    text: false
+    });
 });
 
 var prev_user=null;

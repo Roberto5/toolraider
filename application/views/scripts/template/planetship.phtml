@@ -1,0 +1,54 @@
+<?php 
+//init
+
+$this->key=array(
+		'RACE'=>$this->race,
+		'NAME_PLANET'=>$this->ship['name'],
+		'ID_PLANET'=>intval($this->ship['pid']),
+		//			''=>'',
+//			''=>'',
+//			'PLANET'=>'',
+		'BASEURL'=>$this->baseUrl()
+);
+Zend_View_Filter_Tmpeng::addkey($this->key);
+//$this->log->debug($this->ship,'in planetship');
+?>
+<div id="planetID_PLANET"><p>
+<table class="ship">
+	<tr>
+<?php 
+
+if ($this->race=='ALIEN') $t=4;
+else $t=12;
+for ($i = 0; $i < $t; $i++) {
+?>
+    	<td><div class="ship RACE <?php echo str_replace(" ", "",$this->ship_name[$this->race][$i]);?>" title="<?php echo $this->ship_name[$this->race][$i];?>"></div></td>
+<?php
+}
+?>
+</tr><tr>
+<?php
+for ($j = 0; $j < $t; $j++) {
+	$this->tot[$j]+=intval($this->ship['ships'][$j]);
+?>
+			<td id="t<?php echo $j;?>"><?php echo intval($this->ship['ships'][$j]);?></td>
+<?php
+}
+?>
+			<td>
+<?php
+if ($this->own) {
+?>
+				<button onclick="ship.edit(ID_PMANET);showforms('forms', 'formtext', 1);" class="edit">[EDIT]</button>
+<?php
+}
+if ($this->istot) {
+	?>
+	<button class="add" id="add_tab">[ADD]</button>
+	<?php 
+}
+?>
+			</td>
+	</tr>
+</table>		
+</p></div>

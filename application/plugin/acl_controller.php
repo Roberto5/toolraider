@@ -56,7 +56,7 @@ class plugin_acl_controller extends Zend_Controller_Plugin_Abstract
         if (! in_array($resource, $totres)) {
             $this->_acl->addResource($resource, $module);
         }
-        
+        $log->debug($role,'role');
         // controllo privilegi
         if (! $this->_acl->isAllowed($role, $resource, $privilege)) {
         	Zend_Controller_Front::getInstance()->getResponse()->setHttpResponseCode(403);

@@ -21,7 +21,7 @@ class Plugin_Logweb extends Zend_Log_Writer_Abstract {
 	private function format($data,$label='') {
 		//if ($label) $label="Value of '$label' is : ";
 		if (is_string($data)) {
-			return " String(".strlen($data).") '$data'";
+			return " String(".strlen($data).") '".htmlentities($data)."'";
 		}
 		elseif (is_array($data)) {
 			$text=' <summary><b>Array</b><details>';

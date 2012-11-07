@@ -24,8 +24,8 @@ class Model_role extends Zend_Db_Table_Abstract {
 	private $id;
 	static function getRole() {
 		$auth=Zend_Auth::getInstance();
-		if (!self::$r && $auth->hasIdentity()) {
-			self::$r=Zend_Db_Table::getDefaultAdapter()
+		if ($auth->hasIdentity()) {
+			if (!self::$r) 	self::$r=Zend_Db_Table::getDefaultAdapter()
 			->fetchOne(
 				"SELECT `role` FROM `" . PREFIX . "role` 
 				WHERE `uid`='" . $auth->getIdentity()->id . "'");

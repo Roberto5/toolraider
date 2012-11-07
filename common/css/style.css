@@ -3,6 +3,8 @@ normal: #2974dd
 over: #49d7ff
 inactive: #0a1723
 
+report #024a92
+
 text input: #003d4d
 border: #3eaeee
 back: #071221
@@ -10,7 +12,7 @@ back: #071221
 
 /*layout*/
 #header {
-	background: url('../img/titolo.png') no-repeat center;
+	background: url('../img/titolo.png') no-repeat center black;
 	width:600px;
 	height:250px;
 	margin: 0 auto;
@@ -227,6 +229,153 @@ button:hover,input[type="submit"]:hover,input[type="button"]:hover {
 
 /*stile del shiptool 
 @todo da rivedere*/
+
+/*ship*/
+table.ship td {
+	background:#024a92;
+}
+table.ship {
+	border: 1px solid #3eaeee;
+}
+
+div.tabs {
+	width: 800px;
+	margin: 0 auto;
+}
+
+div.ship {
+	height:50px;
+	width:50px;
+	overflow: hidden;
+	background-repeat: no-repeat;
+}
+div.ship.TITAN {
+	background:url('../img/ship/TITAN.jpg');
+}
+div.ship.TERRAN {
+	background:url('../img/ship/TERRAN.jpg');
+}
+div.ship.XEN {
+	background:url('../img/ship/XEN.jpg');
+}
+
+div.ship.ALIEN {
+	background:url('../img/ship/ALIEN.jpg');
+}
+
+.Fighter {
+	background-position: -260px 0 !important;
+}
+.Destroyer{
+	background-position: -312px 0 !important;
+}
+.Cruiser{
+	background-position: -364px 0 !important;
+}
+.Battleship{
+	background-position: -416px 0 !important;
+}
+.Bomber{
+	background-position: -468px 0 !important;
+}
+.Frigate{
+	background-position: -520px 0 !important;
+}
+.Recycler{
+}
+.LargeRecycler{
+	background-position: -52px 0 !important;
+}
+.LargeFreighter{
+	background-position: -104px 0 !important;
+}
+.TerranFreighter {
+	background-position: -104px 0 !important;
+}
+.Freighter{}
+.Probe{
+	background-position: -572px 0 !important;
+}
+.Pulsar{}
+.Scout{
+	background-position: -260px 0 !important;
+}
+.Delphi{
+	background-position: -312px 0 !important;
+}
+.Corsair{
+	background-position: -364px 0 !important;
+}
+.Terminator{
+	background-position: -416px 0 !important;
+}
+.Carrier{
+	background-position: -468px 0 !important;
+}
+.Phoenix{
+	background-position: -520px 0 !important;
+}
+.Freighter{
+	background-position: -52px 0 !important;
+}
+.Observer{
+	background-position: -208px 0 !important;
+}
+.Protector{
+	background-position: -572px 0 !important;
+}
+.Xnair{
+	background-position: -260px 0 !important;
+}
+.Mylon{
+	background-position: -312px 0 !important;
+}
+.Maxtron{
+	background-position: -364px 0 !important;
+}
+.Mothership{
+	background-position: -416px 0 !important;
+}
+.Suikon{
+	background-position: -468px 0 !important;
+}
+.Octopon{
+	background-position: -52px 0 !important;
+}
+.Zek{
+	background-position: -104px 0 !important;
+}
+.Zekkon{
+	background-position: -156px 0 !important;
+}
+.Psikon{
+	background-position: -520px 0 !important;
+}
+.Macid{
+	background-position: -572px 0 !important;
+}
+.XenBomber {
+	background-position: -208px 0 !important;
+}
+.ColonyShip{
+	background-position: -156px 0 !important;
+}
+.XenColonyShip{
+	
+}
+.Pholidoteuthis{
+
+}
+.Chiroteuthis{
+	background-position: -52px 0 !important;
+}
+.Sepioteuthis{
+	background-position: -156px 0 !important;
+}
+.Architeuthis{
+	background-position: -104px 0 !important;
+}
+
 .itable
 {
     color: black;

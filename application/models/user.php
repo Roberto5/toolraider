@@ -23,6 +23,17 @@ class Model_user extends Zend_Db_Table_Abstract {
 	 */
 	public $ally;
 	public $role;
+	/**
+	 * 
+	 * @var Model_Ship
+	 */
+	public $ship;
+	/**
+	 * 
+	 * @var Model_Planet
+	 */
+	public $planet;
+	public $race=array('TITAN','XEN','TERRAN');
 	function __construct ($option)
 	{
 		$this->_name=PREFIX.'user';
@@ -31,10 +42,13 @@ class Model_user extends Zend_Db_Table_Abstract {
 		elseif (is_array($option)) $query=$option;
 		else throw new Zend_Db_Table_Exception(' $option params is not int or array');
 		$this->data= $this->fetchRow($query);
+		$id=intval($this->data['id']);
 		if ($this->data['aid']) {
 			$this->ally=new Model_ally($this->data['aid']);
-			$this->role=$this->getAdapter()->fetchOne("SELECT `role` FROM `".PREFIX."ally_role` WHERE `uid`='".$this->data['id']."'");
+			$this->role=$this->getAdapter()->fetchOne("SELECT `role` FROM `".PREFIX."ally_role` WHERE `uid`='".$id."'");
 		}
+		$this->ship=new Model_Ship($id);
+		$this->planet=new Model_Planet($id);
 		self::$instance=$this;
 	}
 	static function getInstance($option=0) {
@@ -78,6 +92,9 @@ class Model_user extends Zend_Db_Table_Abstract {
 	function leaveAlly() {
 		$this->getAdapter()->delete(PREFIX.'ally_role',array('aid'=>$this->data['aid']));
 		$this->updateU(array('aid'=>0));
+	}
+	function getRace() {
+		return Zend_Registry::get('translate')->_($this->race[$this->data['race']]);
 	}
 }
 ?>
