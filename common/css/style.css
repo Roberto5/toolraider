@@ -230,6 +230,18 @@ button:hover,input[type="submit"]:hover,input[type="button"]:hover {
 /*stile del shiptool 
 @todo da rivedere*/
 
+input.readonly{
+	display:none;
+}
+span.readonly{
+	display:inline;
+}
+input.ship {
+	width:70px;
+}
+span.ship {
+	display:none;
+}
 /*ship*/
 table.ship td {
 	background:#024a92;

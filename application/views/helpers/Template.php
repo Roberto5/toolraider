@@ -27,7 +27,7 @@ class Zend_View_Helper_Template extends Zend_View_Helper_Abstract
    			'Frigate',
    			'Recycler',
    			'Large Recycler',
-   			'Freighter',
+   			'Terran Freighter',
    			'Probe',
    			'Pulsar',
    			'Colony Ship'
@@ -52,13 +52,13 @@ class Zend_View_Helper_Template extends Zend_View_Helper_Abstract
     		'Maxtron',
     		'Mothership',
     		'Suikon',
-    		'Bomber',
+    		'Xen Bomber',
     		'Octopon',
     		'Zek',
     		'Zekkon',
     		'Psikon',
     		'Macid',
-    		'Colony Ship'
+    		'Xen Colony Ship'
     	),
     	'ALIEN'=>array(
     		'Pholidoteuthis',
@@ -66,7 +66,7 @@ class Zend_View_Helper_Template extends Zend_View_Helper_Abstract
     		'Sepioteuthis',
     		'Architeuthis'
     	)
-    );
+    	);
     
     function __construct ($baseUrl=false)
     {
@@ -206,66 +206,19 @@ class Zend_View_Helper_Template extends Zend_View_Helper_Abstract
     
     /**
      * @todo rifare
-     * @param unknown_type $tt
-     * @param unknown_type $navi
-     * @param Boolean $own
-     * @param unknown_type $razza
+     * @param Array $config
+     * @return string
      */
-    function ship($tt,$navi,$own,$race)
+    function ship($config)
     {
-    	if (!$bool) {
-    		$script = "<script language=\"javascript\">\n
-    		pianeti=new Array();\n";
-    		$i = 0;
-    		while ($tt[$i]) {
-    			$script .= "pianeti[".$i."]=new Array();\n
-    			pianeti[".$i."]['nome']='".$tt[$i]['nome_pianeta']."';\n
-    			pianeti[".$i."]['pid']='".$tt[$i]['pianeta']."';\n";
-    			for ($j = 1; $j <= 12; $j++) $script .= "pianeti[".$i."][".$j."]=".$tt[$i]['n'.$j].";\n";
-    			$script .= "\n";
-    			$i++;
-    		}
-    		$script .= "</script>";
-    		echo $script;
-    	}
-    	echo "<center>
-    	<table class=\"itable\" cellpadding=\"2\" cellspacing=\"1\" >
-    	<tr>
-    	<td class=\"header1\" colspan=\"16\">";
-    	if ($bool) echo "le truppe di ".$tt[0]['uid'];
-    	else  echo "le tue truppe";
-    	echo "</td>
-    	</tr>
-    	<tr>
-    	<td class=\"header1a\">Pianeta</td>";
-    	for ($i = 1; $i <= 12; $i++) echo "<td class=\"header1a\"><img src=\"images/".$razza."/".$i.".gif\" title=\"".$navin[$raz][$i]."\" /></td>\n";
-    
-    	echo "<td class=\"header1a\"></td></tr>";
-    	$i = 0;
-    	$tot = "";
-    	while ($tt[$i]) {
-    		echo "<tr><td class=\"header1a\">".$tt[$i]['nome_pianeta']."</td>";
-    
-    		for ($j = 1; $j <= 12; $j++) {
-    			echo "<td class=\"header1a\" id=\"t".$i."\">".$tt[$i]['n'.$j]."</td>";
-    			$tot[$j] += $tt[$i]['n'.$j];
-    		}
-    		echo "<td class=\"header1a\">";
-    		if (!$bool) {
-    			echo "<a href=\"javascript:;\" onclick=\"editf(".$i.",".$tt[$i]['pianeta'].");showforms('forms', 'formtext', 1)\" ><img src=\"admin/images/edit.gif\" title=\"modifica\" /></a>
-    			<a href=\"ship.php?action=canc&pid=".$tt[$i]['pianeta']."\" ><img src=\"images/del.gif\" title=\"rimuovi\" /></a>";
-    		}
-    		echo "</td></tr>";
-    		$i++;
-    	}
-    	echo "<tr><td class=\"header1a\">totale</td>\n";
-    	for ($j = 1; $j <= 12; $j++) {
-    		if (!$tot[$j]) $tot[$j] = "0";
-    		echo "<td class=\"header1a\">".$tot[$j]."</td>";
-    	}
-    	echo "<td class=\"header1a\">";
-    	if (!$bool) echo "<a href=\"javascript:;\" onclick=\"showforms('forms', 'formtext', 1)\"><img src=\"images/add.png\" title=\"aggiungi\" /></a>";
-    	echo "</td></tr></table></center>";
+    	$table=new Zend_View();
+    	$table->ship=$config['ship'];
+    	$table->own=$config['own'];
+    	$table->list=$config['list'];
+    	$table->ship_name=$this->ship_name;
+    	$table->addFilter('Tmpeng')->addFilterPath(APPLICATION_PATH.'/plugin');
+    	$table->setScriptPath(APPLICATION_PATH.'/views/scripts/template/');
+    	return $table->render('shiptable.phtml');
     }
     /**
      * @todo rifare

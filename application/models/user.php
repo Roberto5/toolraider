@@ -94,7 +94,7 @@ class Model_user extends Zend_Db_Table_Abstract {
 		$this->updateU(array('aid'=>0));
 	}
 	function getRace() {
-		return Zend_Registry::get('translate')->_($this->race[$this->data['race']]);
+		return $this->race[$this->data['race']];
 	}
 }
 ?>

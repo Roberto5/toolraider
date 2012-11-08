@@ -1,11 +1,9 @@
 $(function() {
         var tabTitle = $( "#tab_title" ),
             tabContent = $( "#tab_content" ),
-            tabTemplate = "<li><a href='#{href}'>#{label}</a> <span class='ui-icon ui-icon-close'>Remove Tab</span></li>",
-            tabCounter = 2;
- 
+            tabTemplate = "<li><a href='#{href}'>#{label}</a> <span class='ui-icon ui-icon-close'>Remove Tab</span></li>";
+        //crea la tabs
         var tabs = $( ".tabs" ).tabs({
-        	//event: "mouseover",
         	collapsible: true,
         });
  
@@ -13,6 +11,7 @@ $(function() {
         var dialog = $( "#dialog" ).dialog({
             autoOpen: false,
             modal: true,
+            width:1000,
             buttons: {
                 Add: function() {
                     addTab();
@@ -33,18 +32,30 @@ $(function() {
             dialog.dialog( "close" );
             event.preventDefault();
         });
- 
         // actual addTab function: adds new tab using the input from the form above
         function addTab() {
-            var label = tabTitle.val() || "Tab " + tabCounter,
-                id = "tabs-" + tabCounter,
+            var label = tabTitle.find('option:selected').text(),
+                id = "planet" + tabTitle.val(),
                 li = $( tabTemplate.replace( /#\{href\}/g, "#" + id ).replace( /#\{label\}/g, label ) ),
-                tabContentHtml = tabContent.val() || "Tab " + tabCounter + " content.";
- 
+                tabContentHtml = tabContent.html();
+            tabContentHtml=tabContentHtml.replace(/"ship"/gi,'"readonly"');
+            tabContentHtml=tabContentHtml.replace('table class="readonly"','table class="ship"');
+            input=tabContent.find('input');
+        	for (key in input) {
+        		if (key=='length') break;
+        		v=$(input[key]);
+        		p=new RegExp('<span id="t'+key+'p0" class="readonly">\d<\/span>');
+        		rep='<span id="t'+key+'p'+id+'" class="readonly">'+v.val()+'<\/span>';
+        		tabContentHtml=tabContentHtml.replace(p,rep);
+        		/*v.attr('value',v.val());
+        		v.removeClass('ship');
+        		v.addClass('readonly');
+        		spanid=v.attr('id').replace('i','t');
+        		$('#'+spanid).text(v.val()).removeClass('ship').addClass('readonly');*/
+        	}
             tabs.find( ".ui-tabs-nav" ).append( li );
             tabs.append( "<div id='" + id + "'><p>" + tabContentHtml + "</p></div>" );
             tabs.tabs( "refresh" );
-            tabCounter++;
             //ship.add();
         }
  
