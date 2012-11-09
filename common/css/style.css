@@ -237,7 +237,10 @@ span.readonly{
 	display:inline;
 }
 input.ship {
-	width:70px;
+	width:50px;
+}
+input.ship:focus {
+	width:90px;
 }
 span.ship {
 	display:none;
@@ -251,7 +254,7 @@ table.ship {
 }
 
 div.tabs {
-	width: 800px;
+	width: 900px;
 	margin: 0 auto;
 }
 

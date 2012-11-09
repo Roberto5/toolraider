@@ -4,7 +4,7 @@
 $this->key=array(
 		'RACE'=>$this->race,
 		'NAME_PLANET'=>$this->ship['name'],
-		'ID_PLANET'=>intval($this->ship['pid']),
+		'PID'=>intval($this->ship['pid']),
 		'CLASS'=>($this->form ? 'ship' : 'readonly'),
 //			''=>'',
 //			'PLANET'=>'',
@@ -13,8 +13,8 @@ $this->key=array(
 Zend_View_Filter_Tmpeng::addkey($this->key);
 //$this->log->debug($this->ship,'in planetship');
 ?>
-<div id="planetID_PLANET">
-<table class="ship">
+<div id="planetPID" style="padding:0;">
+<table class="ship" style="margin: 10px auto;">
 	<tr>
 <?php 
 
@@ -31,8 +31,8 @@ for ($i = 0; $i < $t; $i++) {
 for ($j = 0; $j < $t; $j++) {
 		$this->tot[$j]+=intval($this->ship['ships'][$j]);
 ?>
-			<td><span id="t<?php echo $j;?>pID_PLANET" class="CLASS"><?php echo intval($this->ship['ships'][$j]);?></span>
-				<form><input class="CLASS" type="number" id="i<?php echo $j;?>pID_PLANET" value="<?php echo intval($this->ship['ships'][$j]);?>" /></form></td>
+			<td><span id="t<?php echo $j;?>pPID" class="CLASS"><?php echo intval($this->ship['ships'][$j]);?></span>
+				<form><input class="CLASS" type="number" id="i<?php echo $j;?>pPID" value="<?php echo intval($this->ship['ships'][$j]);?>" /></form></td>
 <?php
 	
 }
@@ -41,7 +41,7 @@ for ($j = 0; $j < $t; $j++) {
 <?php
 if ($this->own) {
 ?>
-				<button class="edit ship">[EDIT]</button>
+				<button id="editPID" class="edit ship">[EDIT]</button>
 <?php
 }
 if ($this->istot) {
