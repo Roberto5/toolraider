@@ -32,7 +32,7 @@ for ($j = 0; $j < $t; $j++) {
 		$this->tot[$j]+=intval($this->ship['ships'][$j]);
 ?>
 			<td><span id="t<?php echo $j;?>pID_PLANET" class="CLASS"><?php echo intval($this->ship['ships'][$j]);?></span>
-				<input class="CLASS" type="number" id="i<?php echo $j;?>pID_PLANET" value="<?php echo intval($this->ship['ships'][$j]);?>" /></td>
+				<form><input class="CLASS" type="number" id="i<?php echo $j;?>pID_PLANET" value="<?php echo intval($this->ship['ships'][$j]);?>" /></form></td>
 <?php
 	
 }

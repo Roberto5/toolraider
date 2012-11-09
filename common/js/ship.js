@@ -44,8 +44,12 @@ $(function() {
         	for (key in input) {
         		if (key=='length') break;
         		v=$(input[key]);
-        		p=new RegExp('<span id="t'+key+'p0" class="readonly">\d<\/span>');
-        		rep='<span id="t'+key+'p'+id+'" class="readonly">'+v.val()+'<\/span>';
+        		p=new RegExp('<span id="t'+key+'p0" class="readonly">[0-9]+');
+        		pid=id.replace('planet','');
+        		rep='<span id="t'+key+'p'+pid+'" class="readonly">'+v.val();
+        		tabContentHtml=tabContentHtml.replace(p,rep);
+        		p=new RegExp('id="i'+key+'p0" value="[0-9]+');
+        		rep='id="i'+key+'p'+pid+'" value="'+v.val();
         		tabContentHtml=tabContentHtml.replace(p,rep);
         		/*v.attr('value',v.val());
         		v.removeClass('ship');
@@ -65,9 +69,12 @@ $(function() {
             .click(function() {
                 dialog.dialog( "open" );
             });
- 
+        tabs.find('form').live('submit',function(event){
+        	console.log('close edit');
+        	event.preventDefault();
+        });
         // close icon: removing the tab on click
-        $( "#tabs span.ui-icon-close" ).live( "click", function() {
+        $( ".tabs span.ui-icon-close" ).live( "click", function() {
         	//ship.del(ID_PLANET)
             var panelId = $( this ).closest( "li" ).remove().attr( "aria-controls" );
             $( "#" + panelId ).remove();
