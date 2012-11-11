@@ -26,7 +26,7 @@ class RegController extends Zend_Controller_Action
 				$data = array('username' => $post['username'],
 						'password' => sha1($post['password']), 'email' => $post['email'],
 						'active' => $active, 'code' => $cryptcode);
-				Model_user::register($data);
+				Model_User::register($data);
 				if ($conf->email->validation) {
 					include_once APPLICATION_PATH.'/language/email.php';
 					$locale=$this->_t->getLocale();
@@ -74,7 +74,7 @@ class RegController extends Zend_Controller_Action
 	public function activeAction() {
 		$code=$this->_getParam('code');
 		$code=$code ? sha1($code):null;
-		$user=new Model_user(array('code'=>$code));
+		$user=new Model_User(array('code'=>$code));
 		$this->_log->debug(print_r($user->data,true));
 		if ($user->data && ($user->data['code_time']+86400)<time()) {
 			$auth=Zend_Auth::getInstance();
@@ -92,7 +92,7 @@ class RegController extends Zend_Controller_Action
 	}
 	public function resendAction() {
 		$code=$this->_getParam('code');
-		$user=Model_user::getInstance();
+		$user=Model_User::getInstance();
 		include_once APPLICATION_PATH.'/language/email.php';
 		$locale=$this->_t->getLocale();
 		if ($user->data) {

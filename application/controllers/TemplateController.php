@@ -59,7 +59,8 @@ class TemplateController extends Zend_Controller_Action
 
     public function indexAction()
     {
-        // action body
+    	$planet=Model_User::getInstance()->planet;
+        $this->_log->debug(array_keys($planet->toArray()),'planet');
     }
 
     public function shiptableAction()
@@ -72,6 +73,7 @@ class TemplateController extends Zend_Controller_Action
         );
         //$this->_log->debug($this->view->ship,'ship');
         $this->view->own=false;
+        
     }
 
     public function planetshipAction()

@@ -4,12 +4,12 @@ class AllianceController extends Zend_Controller_Action
 {
 	/**
 	 * 
-	 * @var Model_user
+	 * @var Model_User
 	 */
 	private $user;
     public function init()
     {
-        $this->user=Model_user::getInstance();
+        $this->user=Model_User::getInstance();
     }
 
     public function indexAction()

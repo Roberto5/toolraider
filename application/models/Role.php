@@ -9,7 +9,7 @@
 
 require_once 'Zend/Db/Table/Abstract.php';
 
-class Model_role extends Zend_Db_Table_Abstract {
+class Model_Role extends Zend_Db_Table_Abstract {
 
 	/**
 	 * The default table name 

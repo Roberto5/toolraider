@@ -26,8 +26,8 @@ class plugin_acl_controller extends Zend_Controller_Plugin_Abstract
         $module = $request->getModuleName();
         // assegno un ruolo
         if ($auth->hasIdentity()) {
-            $role = Model_role::getRole();
-            $user=Model_user::getInstance();
+            $role = Model_Role::getRole();
+            $user=Model_User::getInstance();
             if (($user->data['active']!='1')&& (($request->getControllerName()!='reg')&&($request->getControllerName()!='login'))) {
             	$log->notice('user inactive');
             	$request->setModuleName('default')

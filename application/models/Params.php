@@ -9,7 +9,7 @@
 require_once 'Zend/Db/Table/Abstract.php';
 require_once 'include/costant.php';
 
-class Model_params extends Zend_Db_Table_Abstract {
+class Model_Params extends Zend_Db_Table_Abstract {
 
 	/**
 	 * The default table name 

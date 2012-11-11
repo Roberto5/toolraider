@@ -21,8 +21,8 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 	protected function _initParams() {
 		$this->bootstrap('autoload');
 		$this->bootstrap('db');
-		include_once 'application/models/params.php';
-		$param=new Model_params();
+		include_once 'application/models/Params.php';
+		$param=new Model_Params();
 		Zend_Registry::set('param',$param);
 		return $param;
 	}
@@ -44,7 +44,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 		$auth->setStorage($storage);
 		//$this->bootstrap('log');$log=$this->getResource('log');
 		if ($auth->hasIdentity()) 
-			$user=new Model_user(intval($auth->getIdentity()->id));
+			$user=new Model_User(intval($auth->getIdentity()->id));
 	}
 	/**
 	 * set language of application
@@ -99,7 +99,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 			$log->addWriter($file2);
 		}
 		$file->addFilter(new Zend_Log_Filter_Priority(Zend_Log::DEBUG,"!="));
-		$role = Model_role::getRole();
+		$role = Model_Role::getRole();
 		$file->setFormatter($formatter);
 		if ((APPLICATION_ENV != "production") || ($acl->isAllowed($role, "debug"))) {
 			$log->addWriter($web);

@@ -76,7 +76,7 @@ class LoginController extends Zend_Controller_Action
 			$v->addValidator(new Zend_Validate_Db_RecordExists(array('table'=>PREFIX.'user','field'=>'email')));
 			$this->view->type=2;
 			if ($v->isValid($_POST['email'])) {
-				$user=new Model_user(array('email'=>$_POST['email']));
+				$user=new Model_User(array('email'=>$_POST['email']));
 				$code=$this->genrandpass();
 				$user->updateU(array('code'=>sha1($code)));
 				$this->view->type=1;
@@ -108,7 +108,7 @@ class LoginController extends Zend_Controller_Action
 		elseif ($code) {
 			$code=sha1($code);
 			$this->view->type=1;
-			$user=new Model_user(array('code'=>$code));
+			$user=new Model_User(array('code'=>$code));
 			if ($user->data && ($user->data['code_time']+86400)<time()) {
 				$pass=$this->genrandpass();
 				$user->updateU(array('code'=>'','password'=>sha1($pass)));

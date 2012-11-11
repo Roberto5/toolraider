@@ -9,7 +9,7 @@
 require_once 'Zend/Db/Table/Abstract.php';
 require_once 'include/costant.php';
 
-class Model_ally extends Zend_Db_Table_Abstract {
+class Model_Ally extends Zend_Db_Table_Abstract {
 	public $_name;
 	public $data;
 	public $members=array();
