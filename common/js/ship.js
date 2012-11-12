@@ -55,21 +55,17 @@ var ship = {
 				'submit',
 				function(event) {
 					event.preventDefault();
-					id = $(this).parent().parent().parent().parent().parent()
-							.attr('id').replace('planet', '');
-					console.log('close edit id ', id);
-					ship.edit(id);
+					id = $(this).children()
+							.attr('id').match(/i\d+p(\d+)/);
+					console.log('close edit id ', id[1]);
+					ship.edit(id[1]);
 
 				});
 		// close icon: removing the tab on click
 		$(".tabs span.ui-icon-close").live("click", function() {
 			var panel=$(this).closest("li");
 			var panelId = panel.attr("aria-controls");
-			ship.del(panelId.replace('planet',''));
-			panel.remove();
-			$("#" + panelId).remove();
-			ship.tabs.tabs("refresh");
-			
+			ship.del(panelId,panel);
 		});
 		$('button.ship.edit').live('click', function(event) {
 			pid = this.id.replace('edit', '');
@@ -94,6 +90,8 @@ var ship = {
 					'readonly');
 			diff = new Array();
 			edit = false;
+			s=new Array();
+			ka=new Array();
 			for (key in input) {
 				if (key == 'length')
 					break;
@@ -106,19 +104,26 @@ var ship = {
 				diff[key] = before - after;
 				id = v.attr('id').replace('i', 't');
 				$('span#' + id).text(parseInt(n));
-				if (diff[key] != 0)
+				if (diff[key] != 0) {
 					edit = true;
+					s.push(before);
+					ka.push(key);
+				}
 			}
-			this.updateTot(diff);
-			// add ajax call
+			// ajax call
+			
+			
 			if (edit) {
-				console.log('ajax call');
+				request('/shiptool/update/pid/'+pid,{'ship':s,'key':ka},function(data){
+						ship.updateTot(diff);
+				},true);
 			}
+			
 		} else {
 			this.inedit[pid] = true;
 			$('#planet' + pid + ' input').removeClass('readonly').addClass(
 					'ship');
-			$('#planet' + pid + ' span:not("ui-icon")').removeClass('readonly')
+			$('#planet'+pid+' span:not(.ui-icon,.ui-button-text)').removeClass('readonly')
 					.addClass('ship');
 			$('#planet' + pid + ' button').button('option', 'icons', {
 				primary : 'ui-icon-check'
@@ -140,9 +145,7 @@ var ship = {
 			span.eq(i).text(t);
 		}
 	},
-	add : function(pid) {
-		pid=parseInt(pid);
-		if (pid==0) return false;
+	add : function() {
 		var label = this.tabTitle.find('option:selected').text(), id = "planet"
 				+ this.tabTitle.val(), li = $(this.tabTemplate.replace(
 				/#\{href\}/g, "#" + id).replace(/#\{label\}/g, label)), tabContentHtml = this.tabContent
@@ -165,19 +168,30 @@ var ship = {
 			p = new RegExp('id="i' + key + 'p0" value="[0-9]+');
 			rep = 'id="i' + key + 'p' + pid + '" value="' + v.val();
 			tabContentHtml = tabContentHtml.replace(p, rep);
-			tabContentHtml = tabContentHtml.replace('edit0', 'edit' + pid);
+			//tabContentHtml = tabContentHtml.replace('edit0', 'edit' + pid);
 			v.val(0);
 		}
-		this.tabs.find(".ui-tabs-nav").append(li);
-		this.tabs.append("<div id='" + id + "'>" + tabContentHtml + "</div>");
-		this.tabs.tabs("refresh");
-		//update totale
-		this.updateTot(diff);
-		//remove planet from list
-		this.tabTitle[0].remove(this.tabTitle[0].selectedIndex);
-		//ajax call
+		title=tabContentHtml.match(/button[\w\s="-]+title="(\w+)"/);
+		tabContentHtml = tabContentHtml.replace(/<button[\s\w="-><]+button>/,
+				'<button id="edit'+pid+'" class="edit ship">'+title[1]+'</button>');
+		si=this.tabTitle[0].selectedIndex;
+		request('/shiptool/add/pid/'+pid,{'ship':diff},function(data){
+			ship.tabs.find(".ui-tabs-nav").append(li);
+			ship.tabs.append("<div id='" + id + "'>" + tabContentHtml + "</div>");
+			ship.tabs.tabs("refresh");
+			//update totale
+			ship.updateTot(diff);
+			//remove planet from list
+			ship.tabTitle[0].remove(si);
+			$("#"+id+" button").button({icons: {
+		        primary: "ui-icon-wrench"
+		    },
+		    text: false
+		    });
+		});
 	},
-	del:function(pid) {
+	del:function(panelId,panel) {
+		pid=panelId.replace('planet','');
 		input=$('#planet'+pid+' input');
 		diff=[];
 		for (key in input) {
@@ -188,8 +202,12 @@ var ship = {
 		}
 		this.updateTot(diff);
 		//add planet to list
-		
-		this.tabTitle[0].options[this.tabTitle[0].options.length]=new Option($('a[href=#planet'+pid+']').text(),pid);
+		request('/shiptool/del/pid/'+pid,null,function(data){
+			ship.tabTitle[0].options[ship.tabTitle[0].options.length]=new Option($('a[href=#planet'+pid+']').text(),pid);
+			panel.remove();
+			$("#" + panelId).remove();
+			ship.tabs.tabs("refresh");
+		});
 		
 		//ajax call
 	}

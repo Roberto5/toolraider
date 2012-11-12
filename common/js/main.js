@@ -13,6 +13,32 @@ $(function(){
     });
 });
 
+/**
+ * @todo add loader
+ * @param url
+ * @param data
+ * @param callback
+ * @param reload
+ */
+function request(url,data,callback,reload) {
+	$.ajax({
+		url:path+url,
+		type:'post',
+		dataType : "json" ,
+		success :function(data){
+			if (!data.success) {
+				alert(data.message);
+				if (reload) location.reload();
+			}
+			callback();
+		},
+		'data':data,
+		error:function(r,s,e ) {
+			alert(e+' on call:'+this.url+' whit data '+this.data);
+		}
+	});
+}
+
 var prev_user=null;
 var prev_email=null; 
 var prev_pass=null;

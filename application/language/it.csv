@@ -71,3 +71,6 @@ Architeuthis@Architeuthis
 SHIPOF@Navi di
 OWNSHIP@Navi proprie
 PLANET@Pianeta
+PLANET_ISNT_OWN@Il pianeta non è tuo
+PLANET_ID_ERR@Pianeta errato
+ADD@Aggiungi

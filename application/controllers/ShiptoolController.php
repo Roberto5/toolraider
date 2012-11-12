@@ -33,39 +33,45 @@ class ShiptoolController extends Zend_Controller_Action
     	}
     }
 	/**
-	 * @toto create a ajax templare phtml
+	 * 
 	 */
     public function delAction()
     {
         $this->_helper->layout->disableLayout();
 		$this->_helper->viewRenderer->setNoRender(true);
 		$pid=intval($this->_getParam('pid'));
+		$bool='false';$mess='""';
 		if ($pid){//pid is a number
 			if ($this->user->planet[$pid]) {//pid is own planet
-				$this->user->ship->delete(array('pid'=>$pid));
-				echo 'true';
+				$this->user->ship->delete("`pid`='$pid'");
+				$bool= 'true';
 			}
-			else echo 'false';
+			else $mess= '"'.$this->_t->_('PLANET_ISNT_OWN').'"';
 		}
-		else echo 'flase';
-
+		else $mess= '"'.$this->_t->_('PLANET_ID_ERR').'"';
+		$this->view->setScriptPath(APPLICATION_PATH.'/views/scripts/template');
+		echo str_replace(array('BOOL','MESS'), array($bool,$mess), $this->view->render('ajax.phtml'));
     }
 
     public function addAction()
     {
+    	
         $this->_helper->layout->disableLayout();
 		$this->_helper->viewRenderer->setNoRender(true);
-		$pid=intval($this->_getParam('pid',false));
+		$pid=intval($this->_getParam('pid'));
 		$ship=$_POST['ship'];
+		$bool='false';$mess='""';
 		//control planet own and if list of ship of this planet not exist
 		if (is_array($ship) && $this->user->planet[$pid] && !$this->user->ship[$pid]) {
 			foreach ($ship as $key=>$value) {
-				$this->user->ship->insert(array('id'=>$pid,'type'=>intval($key),'quantity'=>intval($value)));
+				if (intval($value)>0)
+					$this->user->ship->insert(array('pid'=>$pid,'type'=>intval($key),'quantity'=>intval($value)));
 			}
-			echo 'true';
+			$bool= 'true';
 		}
-		else echo 'false';
-
+		else $mess= '"'.$this->_t->_('PLANET_ID_ERR').'"';
+		$this->view->setScriptPath(APPLICATION_PATH.'/views/scripts/template');
+		echo str_replace(array('BOOL','MESS'), array($bool,$mess), $this->view->render('ajax.phtml'));
     }
 
     public function updateAction()
@@ -75,13 +81,20 @@ class ShiptoolController extends Zend_Controller_Action
     	$pid=intval($this->_getParam('pid',false));
     	$ship=$_POST['ship'];
     	$key=$_POST['key'];
-    	if (is_array($ship) && $this->user->planet[$pid] && $this->user->ship[$pid]) {
+    	$bool='false';
+    	$mess='""';
+    	if (is_array($ship) && is_array($key) && $this->user->planet[$pid] && $this->user->ship[$pid]) {
     		foreach ($ship as $i=>$v) {
-    			$this->user->ship->update(array('quantity'=>$v),array('pid'=>$pid,'type'=>$key[$i]));
+    			$k=$key[$i];
+    			if ($this->user->ship[$pid][$k])
+    				$this->user->ship->update(array('quantity'=>$v),"`pid`='$pid' AND `type`='$k'");
+    			else $this->user->ship->insert(array('quantity'=>$v,'pid'=>$pid,'type'=>$k));
     		}
-    		echo 'true';
+    		$bool= 'true';
     	}
-    	else echo 'false';
+    	else $mess= '"'.$this->_t->_('PLANET_ID_ERR').'"';
+    	$this->view->setScriptPath(APPLICATION_PATH.'/views/scripts/template');
+    	echo str_replace(array('BOOL','MESS'), array($bool,$mess), $this->view->render('ajax.phtml'));
     }
 }
 
