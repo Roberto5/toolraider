@@ -26,6 +26,7 @@ $file=array(
 		//upload con ajax
 		//"jquery.ajaxupload.3.5.js,"
 		'ship.js',
+		'planet.js',
 		'*main script*',
 		"main.js");
 

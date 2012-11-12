@@ -1,24 +1,29 @@
 <?php 
-
+//$this->log->debug($this->planet,'planet');
 ?>
-<div class="planet">
-	<span>[NAME]</span> <span>[COORDS]</span>
-	<button class="add"></button>
+<table class="planet" border="1">
+	<tr>
+		<td>[NAME]</td>
+		<td>[COORDS]</td>
+		<td class="button"><button onclick="planet.add();" style="width:32px;height:32px" class="add">[ADD]</button></td>
+	</tr>
 	<?php 
 	foreach ($this->planet as $key => $value) {
-		echo "<div>
-		<span>".$value['name']."</span>
-		<span>".$value['galaxy']." ".$value['x']." | ".$value['y'].'</span>
-		<span><button class="edit" onclick="planet.edit('.$key.');">[EDIT]</button>
-		<button onclick="planet.del('.$key.')">[DELETE]</button></span></div>';
+		echo "<tr>
+		<td>".$value['name']."</td>
+		<td>".$this->planet->getGalaxy($key)." ".$value['x']." | ".$value['y'].'</td>
+		<td class="button"><button style="width:32px;height:32px" class="edit" onclick="planet.edit('.$key.');">[EDIT]</button>
+		<button style="width:32px;height:32px" onclick="planet.del('.$key.')" class="delete">[DELETE]</button></td></tr>';
 	}
 	?>
-</div>
-<div>
+</table>
+<?php if ($this->planet->length>1) { ?>
+<div style="text-align:center;">
 	<span style="color: red;">Pi&ugrave; vicino</span> <span
 		style="color: blue;">pi&ugrave; distante</span>
 </div>
-<table border="1">
+
+<table class="planet" border="1">
 	<tr>
 		<td></td>
 		<?php 
@@ -34,7 +39,7 @@
 			echo "<td>".$value['name']."</td>";
 		}
 		echo "</tr>";
-		$s=intval(255*4/$max);
+		if ($max!=0) $s=intval(255*4/$max); else $s=0;
 		foreach ($this->planet as $i => $v) {
 			echo "<tr><td>".$v['name']."</td>";
 			foreach ($this->planet as $j => $b) {
@@ -95,7 +100,9 @@
 		}
 		?>
 		</table>
-	<?php 	/**
+<?php
+}
+/**
 		 ?>
 
 		mappa stellare dei pianeti<br />

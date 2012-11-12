@@ -23,7 +23,7 @@ back: #071221
 	margin:0;
 }
 #container {
-	margin-bottom: 50px;
+	margin-bottom: 100px;
 }
 #footer {
 	bottom:0px;
@@ -101,7 +101,7 @@ textarea {
 	padding: 2px;
 }
 option {color:black;}
-button,input[type="submit"],input[type="button"] {
+/*button,input[type="submit"],input[type="button"] {
 	background:#2974dd;
 	color:white;
 	border-radius:4px;
@@ -110,7 +110,7 @@ button:hover,input[type="submit"]:hover,input[type="button"]:hover {
 	background:#3eaeee;
 	color:white;
 	border-radius:4px;
-}
+}*/
 
 /*contact form*/
 
@@ -391,42 +391,19 @@ div.ship.ALIEN {
 	background-position: -104px 0 !important;
 }
 
-.itable
-{
-    color: black;
-	background-color: #C0C0C0;
-	text-align: center;
+/*planet page*/
+
+.planet{
+	margin: 0 auto;
+	width:300px;
+	border:1px solid #3eaeee;
+	border-collapse:collapse;
+	background:#071221;
 }
-.header1
-{
-    color: black;
-	background-color: #FFFFFF;
-	font-weight: bold;
-	background-image: url(images/tablebg.gif);
-	text-align: center;
-	text-transform: uppercase;
-	font-size: 8pt;
-	letter-spacing: 5px;
-	line-height: 20px;
+.planet .button {
+	width: 80px;
+	padding: 2px 0;
 }
-.header1a
-	{
-    color: gray;
-	background-color: black;
-	/*font-weight: bold;
-	background-image: url(images/tablebg.gif);
-	text-align: center;
-	text-transform: uppercase;*/
-	/*font-size: 8pt;
-	/*letter-spacing: 2px;
-	line-height: 20px;*/
-	}
-.header2
-	{
-	   color: black;
-	background-color: #F5F5F5;
-	font-size: 8pt;
-	}
 
 .null
 	{
@@ -437,26 +414,11 @@ div.ship.ALIEN {
 {
 	cursor: help;
 }
-.zeile1
-{
-    color:  black;
-	background-color: #ffffff;
-    font-size: 8pt;
-	padding: 2px 5px 2px 5px;
-}
-.zeile2
-{
-    color: gray;
-	background-color: black;
-}
+
 .footer
 {
     color: black;
 	background-color: #F5F5F5;
-}
-.fieldLabel
-{
-	font-weight: bold;
 }
    /*nomi nei report*/
 .grey
@@ -468,35 +430,3 @@ div.ship.ALIEN {
     border-left: 1px solid #363636;
     padding: 5px;
 }
-/*spaziatura*/
-TABLE TR TD.spacer {
-	padding: 0px;
-	height: 1px !important;
-	background-color: #363636;
-}
-
-.reportcontainer
-{
-    background-repeat:repeat-y;
-    background-position: center;
-    background-image:url("images/center.png");
-    width: 824px;
-    padding-left: 50px; 
-    padding-top: 10px;
-}
-    
-    /*form*/
-    
-.formular
-{
-	position: absolute;
-	left: 300px;
-	top: inherit;
-	border-top-width:0px;
-	border-left-width:0px;
-	border-right-width:3px;
-	border-bottom-width:3px;
-	border-style:outset;
-	border-color:#777;
-}
-    

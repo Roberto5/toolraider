@@ -15,6 +15,7 @@ class PlanetController extends Zend_Controller_Action
     public function indexAction()
     {
         $this->view->planet=$this->user->planet;
+        $this->_log->debug($this->user->planet->info(),'info');
     }
 
     public function addAction()

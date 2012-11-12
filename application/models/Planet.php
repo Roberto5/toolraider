@@ -4,6 +4,8 @@ class Model_Planet extends Zend_Db_Table_Abstract implements ArrayAccess, Iterat
 {
 	public $data;
 	protected $_planet=array();
+	public $length=0;
+	public $galaxiy=array('Fornax','Centaurus','Phoenix');
 	function __construct ($option)
 	{
 		$this->_name=PREFIX.'planet';
@@ -13,18 +15,18 @@ class Model_Planet extends Zend_Db_Table_Abstract implements ArrayAccess, Iterat
 		else throw new Zend_Db_Table_Exception(' $option params is not int or array');
 		$select=$this->select()->where($query)->order("id");
 		$this->data= $this->fetchAll($select);
+		$l=0;
 		foreach ($this->data as $value) {
+			$l++;
 			$this->_planet[$value['id']]=$value;
 		}
+		$this->length=$l;
+	}
+	public function getGalaxy($pid) {
+		return $this->galaxiy[$this->_planet[$pid]['galaxy']];
 	}
 	public function getname($pid) {
 		return $this->_planet[$pid]['name'];
-	}
-	public function __set($name,$value) {
-		$this->_planet[$name]=$value;
-	}
-	public function __get($key) {
-		return $this->_planet[$key];
 	}
 	public function getIterator() {
 		return new ArrayIterator($this->_planet);

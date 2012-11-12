@@ -1,6 +1,6 @@
 $(function(){
 	$("ul#news").liScroll();
-	$("button:not(.edit):not(.add)").button();
+	$("button:not(.edit):not(.add):not(.delete)").button();
 	$("button.edit").button({icons: {
         primary: "ui-icon-wrench"
     },
@@ -11,6 +11,11 @@ $(function(){
     },
     text: false
     });
+	$("button.delete").button({icons: {
+        	primary: "ui-icon-close"
+    	},
+    		text: false
+    });;
 });
 
 /**
