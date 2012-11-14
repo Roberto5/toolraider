@@ -6,6 +6,11 @@ class Model_Planet extends Zend_Db_Table_Abstract implements ArrayAccess, Iterat
 	protected $_planet=array();
 	public $length=0;
 	public $galaxiy=array('Fornax','Centaurus','Phoenix');
+	/**
+	 * 
+	 * @var Zend_Translate
+	 */
+	public $t;
 	function __construct ($option)
 	{
 		$this->_name=PREFIX.'planet';
@@ -16,8 +21,11 @@ class Model_Planet extends Zend_Db_Table_Abstract implements ArrayAccess, Iterat
 		$select=$this->select()->where($query)->order("id");
 		$this->data= $this->fetchAll($select);
 		$l=0;
-		foreach ($this->data as $value) {
+		$this->t=Zend_Registry::get('translate');
+		foreach ($this->data->toArray() as $value) {
 			$l++;
+			$value['type']=$this->t->_($value['type']);
+			$value['bonus']=unserialize($value['bonus']);
 			$this->_planet[$value['id']]=$value;
 		}
 		$this->length=$l;

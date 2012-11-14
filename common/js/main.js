@@ -1,6 +1,6 @@
 $(function(){
 	$("ul#news").liScroll();
-	$("button:not(.edit):not(.add):not(.delete)").button();
+	$("button:not(.edit):not(.add):not(.delete),input[type=submit]:not(.edit):not(.add):not(.delete)").button();
 	$("button.edit").button({icons: {
         primary: "ui-icon-wrench"
     },

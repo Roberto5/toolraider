@@ -33,6 +33,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 	{
 		$this->bootstrap("db");
 		$this->bootstrap('autoload');
+		$this->bootstrap('language');
 		$db = $this->getPluginResource('db')->getDbAdapter();
 		$adp = new Zend_Auth_Adapter_DbTable($db);
 		$adp->setTableName(PREFIX."user")

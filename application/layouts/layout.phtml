@@ -81,6 +81,7 @@ else{
 		if ($auth->hasIdentity()) {
 			echo '
 				<li><a href="'.$this->url(array('controller'=>"login",'action'=>'logout')).'">Logout</a></li>
+				<li><a href="'.$this->url(array('controller'=>"planet",'action'=>'index')).'">'.$this->t->_('PLAENT_PANNEL').'</a></li>
 				<li><a href="'.$this->url(array('controller'=>"shiptool",'action'=>'index')).'">Shiptool</a></li>
 			';
 		}

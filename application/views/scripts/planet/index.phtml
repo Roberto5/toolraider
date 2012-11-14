@@ -1,5 +1,9 @@
 <?php 
-//$this->log->debug($this->planet,'planet');
+$this->log->debug(serialize(array('solar'=>100,'idro'=>90,'eolic'=>50,'pop'=>40,'ricerca'=>30)),'planet');
+
+$this->headScript()->captureStart();
+echo 'planet.data='.json_encode($this->planet->toArray()).';';
+$this->headScript()->captureEnd();
 ?>
 <table class="planet" border="1">
 	<tr>
@@ -9,8 +13,8 @@
 	</tr>
 	<?php 
 	foreach ($this->planet as $key => $value) {
-		echo "<tr>
-		<td>".$value['name']."</td>
+		echo '<tr>
+		<td class="planet_name" id="p'.$key.'">'.$value['name']."</td>
 		<td>".$this->planet->getGalaxy($key)." ".$value['x']." | ".$value['y'].'</td>
 		<td class="button"><button style="width:32px;height:32px" class="edit" onclick="planet.edit('.$key.');">[EDIT]</button>
 		<button style="width:32px;height:32px" onclick="planet.del('.$key.')" class="delete">[DELETE]</button></td></tr>';
