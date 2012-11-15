@@ -5,12 +5,13 @@ class Model_Planet extends Zend_Db_Table_Abstract implements ArrayAccess, Iterat
 	public $data;
 	protected $_planet=array();
 	public $length=0;
-	public $galaxiy=array('Fornax','Centaurus','Phoenix');
+	static $galaxiy=array('Fornax','Centaurus','Phoenix');
 	/**
 	 * 
 	 * @var Zend_Translate
 	 */
 	public $t;
+	public static $type=array('desert','ice','terran','volcano','water');
 	function __construct ($option)
 	{
 		$this->_name=PREFIX.'planet';
@@ -31,7 +32,7 @@ class Model_Planet extends Zend_Db_Table_Abstract implements ArrayAccess, Iterat
 		$this->length=$l;
 	}
 	public function getGalaxy($pid) {
-		return $this->galaxiy[$this->_planet[$pid]['galaxy']];
+		return self::$galaxiy[$this->_planet[$pid]['galaxy']];
 	}
 	public function getname($pid) {
 		return $this->_planet[$pid]['name'];

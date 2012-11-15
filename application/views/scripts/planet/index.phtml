@@ -5,6 +5,17 @@ $this->headScript()->captureStart();
 echo 'planet.data='.json_encode($this->planet->toArray()).';';
 $this->headScript()->captureEnd();
 ?>
+
+<div id="dialog"><form>
+<?php 
+echo $this->formSelect('galaxy',1,array('class'=>"ui-widget-content ui-corner-all"),Model_Planet::$galaxiy);
+?>
+	<input type="number" value="0" id="x" style="width: 50px;" min="-400" max="400" step="1" />
+	|
+	<input type="number" value="0" id="y" style="width: 50px;" min="-400" max="400" step="1" />
+
+</form></div>
+
 <table class="planet" border="1">
 	<tr>
 		<td>[NAME]</td>
@@ -21,6 +32,16 @@ $this->headScript()->captureEnd();
 	}
 	?>
 </table>
+
+<div id="target" style="width: 300px;margin: 20px auto;padding: 5px;" class="ui-widget-content ui-corner-all">[TARGET] 
+<?php 
+echo $this->formSelect('galaxy',1,array('class'=>"ui-widget-content ui-corner-all"),Model_Planet::$galaxiy);
+?>
+	<input type="number" value="0" id="x" style="width: 50px;" min="-400" max="400" step="1" />
+	|
+	<input type="number" value="0" id="y" style="width: 50px;" min="-400" max="400" step="1" />
+</div> 
+
 <?php if ($this->planet->length>1) { ?>
 <div style="text-align:center;">
 	<span style="color: red;">Pi&ugrave; vicino</span> <span
@@ -35,14 +56,17 @@ $this->headScript()->captureEnd();
 		$max=0;
 		foreach ($this->planet as $i=>$a) {
 			foreach ($this->planet as $j=>$b) {
-				$distance[$i][$j]=intval(sqrt((($this->planet[$j]['x']-$this->planet[$i]['x'])*($this->planet[$j]['x']-$this->planet[$i]['x']))+(($this->planet[$j]['y']-$this->planet[$i]['y'])*($this->planet[$j]['y']-$this->planet[$i]['y']))));
+				$distance[$i][$j]=round(sqrt((($this->planet[$j]['x']-$this->planet[$i]['x'])*($this->planet[$j]['x']-$this->planet[$i]['x']))+(($this->planet[$j]['y']-$this->planet[$i]['y'])*($this->planet[$j]['y']-$this->planet[$i]['y']))),2);
 				if ($distance[$i][$j]>$max) $max=$distance[$i][$j];
 			}
 		}
 		foreach ($this->planet as $value) {
 			echo "<td>".$value['name']."</td>";
 		}
-		echo "</tr>";
+		?>
+		<td>[TARGET]</td>
+	</tr>
+		<?php 
 		if ($max!=0) $s=intval(255*4/$max); else $s=0;
 		foreach ($this->planet as $i => $v) {
 			echo "<tr><td>".$v['name']."</td>";
@@ -100,7 +124,7 @@ $this->headScript()->captureEnd();
 				//$distance.="(".$pianeti[$j]['x'].",".$pianeti[$j]['y'].")(".$pianeti[$i]['x'].",".$pianeti[$i]['y'].")";
 				if ($i!=$j) echo '<td style="color: '.$colore.'; '.$sfondo.'">'.$distance[$i][$j]."</td>"; else echo "<td>-</td>";
 			}
-			echo "</tr>";
+			echo '<td id="d'.$i.'">'.round(sqrt(((0-$this->planet[$i]['x'])*(0-$this->planet[$i]['x']))+((0-$this->planet[$i]['y'])*(0-$this->planet[$i]['y']))),2).'</td></tr>';
 		}
 		?>
 		</table>
