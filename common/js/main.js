@@ -16,6 +16,13 @@ $(function(){
     	},
     		text: false
     });;
+    $('option').addClass('ui-widget-content');
+    $('select').addClass('ui-state-default ui-corner-all')
+    	.bind('mouseover',function(){
+    		$(this).addClass('ui-state-hover');
+    	}).bind('mouseout',function(){
+    		$(this).removeClass('ui-state-hover');
+    	});
 });
 
 /**

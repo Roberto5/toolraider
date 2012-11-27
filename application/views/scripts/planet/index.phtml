@@ -8,7 +8,7 @@ $this->headScript()->captureEnd();
 
 <div id="dialog"><form>
 <?php 
-echo $this->formSelect('galaxy',1,array('class'=>"ui-widget-content ui-corner-all"),Model_Planet::$galaxiy);
+echo $this->formSelect('galaxy',1,array('class'=>"ui-corner-all"),Model_Planet::$galaxy);
 ?>
 	<input type="number" value="0" id="x" style="width: 50px;" min="-400" max="400" step="1" />
 	|
@@ -35,7 +35,7 @@ echo $this->formSelect('galaxy',1,array('class'=>"ui-widget-content ui-corner-al
 
 <div id="target" style="width: 300px;margin: 20px auto;padding: 5px;" class="ui-widget-content ui-corner-all">[TARGET] 
 <?php 
-echo $this->formSelect('galaxy',1,array('class'=>"ui-widget-content ui-corner-all"),Model_Planet::$galaxiy);
+echo $this->formSelect('galaxy',1,array('class'=>"ui-widget-content ui-corner-all"),Model_Planet::$galaxy);
 ?>
 	<input type="number" value="0" id="x" style="width: 50px;" min="-400" max="400" step="1" />
 	|
