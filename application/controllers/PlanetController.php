@@ -44,8 +44,11 @@ class PlanetController extends Zend_Controller_Action
         			$this->user->planet->insert($data);
         			$bool='true';
         		}
+        		else $mess='"'.$this->_t->_('DATA_ERROR').'"';
         	}
+        	else $mess='"'.$this->_t->_('PLANET_ID_ERR').'"';
         }
+        else $mess='"'.$this->_t->_('PLANET_ISNT_OWN').'"';
         $this->view->setScriptPath(APPLICATION_PATH.'/views/scripts/template');
         echo str_replace(array('BOOL','MESS'), array($bool,$mess), $this->view->render('ajax.phtml'));
     }
@@ -56,12 +59,14 @@ class PlanetController extends Zend_Controller_Action
     	$this->_helper->viewRenderer->setNoRender(true);
     	$bool='false';$mess='""';
         $pid=intval($this->_getParam('id'));
-        if (!array_key_exists($pid, $this->user->planet->toArray())) {
+        if (array_key_exists($pid, $this->user->planet->toArray())) {
         	if ($pid) {
         		$bool='true';
         		$this->user->planet->delete("`id`='$pid'");
         	}
+        	else $mess='"'.$this->_t->_('PLANET_ID_ERR').'"';
         }
+        else $mess='"'.$this->_t->_('PLANET_ISNT_OWN').'"';
         $this->view->setScriptPath(APPLICATION_PATH.'/views/scripts/template');
         echo str_replace(array('BOOL','MESS'), array($bool,$mess), $this->view->render('ajax.phtml'));
     }
@@ -86,8 +91,11 @@ class PlanetController extends Zend_Controller_Action
         			$this->user->planet->update($data,array('id'=>$pid));
         			$bool='true';
         		}
+        		else $mess='"'.$this->_t->_('DATA_ERROR').'"';
         	}
+        	else $mess='"'.$this->_t->_('PLANET_ID_ERR').'"';
         }
+        else $mess='"'.$this->_t->_('PLANET_ISNT_OWN').'"';
         $this->view->setScriptPath(APPLICATION_PATH.'/views/scripts/template');
         echo str_replace(array('BOOL','MESS'), array($bool,$mess), $this->view->render('ajax.phtml'));
     }
