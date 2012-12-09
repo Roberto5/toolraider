@@ -3,24 +3,39 @@ $this->log->debug(serialize(array('solar'=>100,'idro'=>90,'eolic'=>50,'pop'=>40,
 
 $this->headScript()->captureStart();
 echo 'planet.data='.json_encode($this->planet->toArray()).';';
+echo 'planet.type='.json_encode(Model_Planet::$type).';';
+echo 'planet.bonus='.json_encode(Model_Planet::$bonus).';';
 $this->headScript()->captureEnd();
 ?>
 
-<div id="dialog"><form>
+<div id="dialog" title="[ADD]"><form>
 <?php 
-echo $this->formSelect('galaxy',1,array('class'=>"ui-corner-all"),Model_Planet::$galaxy);
+echo $this->formSelect('galaxy',1,array('class'=>"ui-corner-all"),Model_Planet::$galaxy)
+.$this->formText('name', '', array('placeholder'=>'[NAME]','class'=>"ui-widget-content ui-corner-all",'style'=>'width: 100px;'));
 ?>
-	<input type="number" value="0" id="x" style="width: 50px;" min="-400" max="400" step="1" />
+	<input title="x" type="number" value="0" id="x" style="width: 50px;" min="-400" max="400" step="1" />
 	|
-	<input type="number" value="0" id="y" style="width: 50px;" min="-400" max="400" step="1" />
-
+	<input title="y" type="number" value="0" id="y" style="width: 50px;" min="-400" max="400" step="1" />
+<?php 
+echo $this->formSelect('type',1,array('class'=>"ui-widget-content ui-corner-all"),Model_Planet::$type)
+.'<div>'.$this->formSelect('bonus1',1,array('class'=>"ui-widget-content ui-corner-all"),Model_Planet::$bonus)
+.$this->formNumber('value1', '0', array('class'=>"ui-widget-content ui-corner-all",'min'=>'-999','max'=>'999','style'=>'width: 60px;')).'% '.'</div>'
+.'<div>'.$this->formSelect('bonus2',1,array('class'=>"ui-widget-content ui-corner-all"),Model_Planet::$bonus)
+.$this->formNumber('value2', '0', array('class'=>"ui-widget-content ui-corner-all",'min'=>'-999','max'=>'999','style'=>'width: 60px;')).'% '.'</div>'
+.'<div>'.$this->formSelect('bonus3',1,array('class'=>"ui-widget-content ui-corner-all"),Model_Planet::$bonus)
+.$this->formNumber('value3', '0', array('class'=>"ui-widget-content ui-corner-all",'min'=>'-999','max'=>'999','style'=>'width: 60px;')).'% '.'</div>'
+.'<div>'.$this->formSelect('bonus4',1,array('class'=>"ui-widget-content ui-corner-all"),Model_Planet::$bonus)
+.$this->formNumber('value4', '0', array('class'=>"ui-widget-content ui-corner-all",'min'=>'-999','max'=>'999','style'=>'width: 60px;')).'% '.'</div>'
+.'<div>'.$this->formSelect('bonus5',1,array('class'=>"ui-widget-content ui-corner-all"),Model_Planet::$bonus)
+.$this->formNumber('value5', '0', array('class'=>"ui-widget-content ui-corner-all",'min'=>'-999','max'=>'999','style'=>'width: 60px;')).'% '.'</div>';
+?>
 </form></div>
 
 <table class="planet" border="1">
 	<tr>
 		<td>[NAME]</td>
 		<td>[COORDS]</td>
-		<td class="button"><button onclick="planet.add();" style="width:32px;height:32px" class="add">[ADD]</button></td>
+		<td class="button"><button onclick="planet.dialog.dialog('open');" style="width:32px;height:32px" class="add">[ADD]</button></td>
 	</tr>
 	<?php 
 	foreach ($this->planet as $key => $value) {

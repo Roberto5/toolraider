@@ -52,6 +52,25 @@ back: #071221
 	text-decoration:none;
 	font-weight: bold;
 }
+
+#loader{
+	background:url('../img/loading.gif') center no-repeat fixed;
+	position: fixed;
+	z-index: 1000;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+}
+#loader DIV{
+	width: 100%;
+	height: 100%;
+	filter:alpha(opacity=70);
+	opacity:.70;
+ 	-moz-opacity:.70;
+	background: black center no-repeat fixed;
+}
+
 /*tag*/
 body {
 	background-image: url('../img/background.jpg'); background-repeat: repeat;

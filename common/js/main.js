@@ -24,7 +24,17 @@ $(function(){
     		$(this).removeClass('ui-state-hover');
     	});
 });
-
+loader={
+	n:0,
+	show:function(){
+		this.n++;
+		$('#loader').show();
+	},
+	hide:function(){
+		this.n--;
+		if (!this.n) $('#loader').hide();
+	}
+};
 /**
  * @todo add loader
  * @param url
@@ -33,16 +43,18 @@ $(function(){
  * @param reload
  */
 function request(url,data,callback,reload) {
+	loader.show();
 	$.ajax({
 		url:path+url,
 		type:'post',
 		dataType : "json" ,
 		success :function(data){
+			loader.hide();
 			if (!data.success) {
 				alert(data.message);
 				if (reload) location.reload();
 			}
-			callback();
+			if (callback) callback(data);
 		},
 		'data':data,
 		error:function(r,s,e ) {

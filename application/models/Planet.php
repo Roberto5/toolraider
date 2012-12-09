@@ -12,6 +12,7 @@ class Model_Planet extends Zend_Db_Table_Abstract implements ArrayAccess, Iterat
 	 */
 	public $t;
 	public static $type=array('desert','ice','terran','volcano','water');
+	public static $bonus=array('Wind power','Solar power','Idro power','Thermal power','Research','Population Growth','Metal production','Crystal production','Tritium production','Building cost','Building production speed','Building cost','Ship cost','Ship production speed');
 	function __construct ($option)
 	{
 		$this->_name=PREFIX.'planet';

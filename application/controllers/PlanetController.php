@@ -29,24 +29,19 @@ class PlanetController extends Zend_Controller_Action
     	$this->_helper->layout->disableLayout();
     	$this->_helper->viewRenderer->setNoRender(true);
     	$bool='false';$mess='""';
-        $pid=intval($this->_getParam('id'));
         $bonus_name=$_POST['bonus_name'];
-        $bonus_value=$_POST['bonus'];
+        $bonus_value=$_POST['bonus_value'];
         //planet must not exist
         if (!array_key_exists($pid, $this->user->planet->toArray())) {
-        	if ($pid) {
-        		if ($this->form->isValid($_POST)&&is_array($bonus_value)&&is_array($bonus_name)) {
-        			$data=$this->form->getValues();
-        			$data['id']=$pid;
-        			$data['uid']=$this->user->data['id'];
-        			$bonus=array_combine($bonus_name, $bonus_value);
-        			$data['bonus']=serialize($bonus);
-        			$this->user->planet->insert($data);
-        			$bool='true';
-        		}
-        		else $mess='"'.$this->_t->_('DATA_ERROR').'"';
+        	if ($this->form->isValid($_POST)&&is_array($bonus_value)&&is_array($bonus_name)) {
+       			$data=$this->form->getValues();
+       			$data['uid']=$this->user->data['id'];
+       			$bonus=array_combine($bonus_name, $bonus_value);
+       			$data['bonus']=serialize($bonus);
+       			$this->user->planet->insert($data);
+       			$bool='true';
         	}
-        	else $mess='"'.$this->_t->_('PLANET_ID_ERR').'"';
+        	else $mess='"'.$this->_t->_('DATA_ERROR').'"';
         }
         else $mess='"'.$this->_t->_('PLANET_ISNT_OWN').'"';
         $this->view->setScriptPath(APPLICATION_PATH.'/views/scripts/template');
