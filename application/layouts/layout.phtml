@@ -4,7 +4,7 @@ $auth=Zend_Auth::getInstance();
 $ua=new Zend_Http_UserAgent();
 $config = Zend_Registry::get('config');
 $news="";
-if ($config->local) $news='<li>le news non funzionano in locale</li>';
+if ($config->local) $news='<li>le news not work on local</li>';
 else{
 	try {
 		$feed =Zend_Feed::import('http://blogpagliaccio.wordpress.com/category/progetti/toolraider/feed/');
@@ -54,14 +54,10 @@ else{
 		</div>
 		<div id="locale">language 
 			<form action="<?php echo $this->url();?>">
-				<select onchange="submit();" name="locale">
-					<option value="browser">auto</option>
-					<?php 
-					foreach ($this->t->getList() as $key => $value) {
-						echo '<option '.($_COOKIE['locale']==$key ? 'selected="selected"':'' ).' value="'.$key.'">'.$value.'</option>';
-					}
-					?>
-				</select>
+				<?php 
+			$list=array_merge(array('browser'=>'auto'),$this->t->getList());
+			echo $this->formSelect('locale',$_COOKIE['locale'],array('onchange'=>'submit();','id'=>'loc'),$list);
+			?>
 			</form>
 		</div>
 		<div id="container">
@@ -74,28 +70,63 @@ else{
 		$text.="</ol>";
 		echo $this->template()->spoiler($text,false,'log');
 	}
-	?>
-			<ul id="nav">
-				<li><a href="<?php echo $this->url(array('controller'=>"index",'action'=>'index'));?>">Home</a></li>
-		<?php 
-		//user
-		if ($auth->hasIdentity()) {
-			echo '
-				<li><a href="'.$this->url(array('controller'=>"login",'action'=>'logout')).'">Logout</a></li>
-				<li><a href="'.$this->url(array('controller'=>"planet",'action'=>'index')).'">'.$this->t->_('PLAENT_PANNEL').'</a></li>
-				<li><a href="'.$this->url(array('controller'=>"shiptool",'action'=>'index')).'">Shiptool</a></li>
-			';
-		}
-		else {
-			echo '
-				<li><a href="'.$this->url(array('controller'=>"login",'action'=>'index')).'">Login</a></li>
-				<li><a href="'.$this->url(array('controller'=>"reg",'action'=>'index')).'">'.$this->t->_('REG').'</a></li>';	
-		}/*<!--  <li><a href="<?php echo $this->url(array('controller'=>"create",'action'=>'index'));?>"><?php echo $this->t->_('CREATE');?></a></li>
-				<li><a href="<?php echo $this->url(array('controller'=>"edit",'action'=>'index'));?>"><?php echo $this->t->_('EDIT');?></a></li>
-			-->*/
-			?>
-				</ul>
-			<?php 
+	$page=array(
+			array('label'=>'Home'
+				,'module'=>'default'
+				,'controller' => 'index'
+				,'action'=>'index'
+				,'order'=>0
+			)
+			,array('label'=>'Login'
+				,'module'=>'default'
+				,'controller' => 'login'
+				,'action'=>'index'
+				,'order'=>1
+				,'resource'=>'login'
+				,'privilege'=>'index'
+			)
+			,array('label'=>'Logout'
+				,'module'=>'default'
+				,'controller' => 'login'
+				,'action'=>'logout'
+				,'order'=>2
+				,'resource'=>'login'
+				,'privilege'=>'logout'
+			)
+			,array('label'=>'[REG]'
+				,'module'=>'default'
+				,'controller' => 'reg'
+				,'action'=>'index'
+				,'order'=>3
+				,'resource'=>'reg'
+				,'privilege'=>'index'
+			)
+			,array('label'=>'Shiptool'
+					,'module'=>'default'
+					,'controller' => 'shiptool'
+					,'action'=>'index'
+					,'order'=>4
+					,'resource'=>'shiptool'
+			)
+			,array('label'=>'[PLANET_PANNEL]'
+					,'module'=>'default'
+					,'controller' => 'planet'
+					,'action'=>'index'
+					,'order'=>5
+					,'resource'=>'planet'
+			)
+			,array('label'=>'Credits'
+				,'module'=>'default'
+				,'controller' => 'index'
+				,'action'=>'credits'
+				,'order'=>100
+			)
+		);
+		$menu=new Zend_Navigation($page);
+		$acl = Zend_Registry::get("acl");
+		
+		$this->navigation($menu)->setAcl($acl)->setRole(Model_Role::getRole());
+		echo $this->navigation();//->menu();
 			echo $this->layout()->content; ?>
 		</div>
 		<div id="footer">RINGRAZIAMENTI: a <b><a href="http://matt93.altervista.org" target="_blanc">matt93</a></b>, all'alleanza J.D. di imperion server 1 primo round e a DarckSimon per l'aiuto fornito <!--

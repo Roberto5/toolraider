@@ -15,8 +15,11 @@ $acl->addResource('admin');
 
 //controller
 $acl->addResource("log");
+$acl->addResource('login','default');
+$acl->addResource('reg','default');
 $acl->addResource("alliance",'default');
 $acl->addResource('shiptool','default');
+$acl->addResource('planet','default');
 
 //altro
 $acl->addResource("debug");
@@ -28,10 +31,14 @@ $acl->deny("guest","debug");
 $acl->deny("guest","log");
 $acl->deny("guest","alliance");
 $acl->deny("guest","shiptool");
+$acl->deny('guest','login','logout');
+$acl->deny('guest','planet');
 
 //permessi user
 
 $acl->allow('user','default');
+$acl->deny('user','login','index');
+$acl->deny('user','reg','index');
 
 //permessi staff
 //@todo definire permessi staff

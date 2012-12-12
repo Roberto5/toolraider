@@ -37,18 +37,18 @@ back: #071221
 	right:0px;
 	position:absolute;
 }
-#nav li {
+.navigation li {
 	display:inline;
 	padding: 3px;
 }
-#nav li:hover{
+.navigation li:hover{
 	border: solid 1px #49d7ff;
 	padding:2px;
 }
-#nav {
+.navigation {
 	text-align:center;
 }
-#nav a{
+.navigation a{
 	text-decoration:none;
 	font-weight: bold;
 }
