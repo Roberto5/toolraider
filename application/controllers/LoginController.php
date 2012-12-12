@@ -69,6 +69,7 @@ class LoginController extends Zend_Controller_Action
 	}
 
 	public function recoverAction() {
+		$conf=Zend_Registry::get('config');
 		$code=$this->_getParam('code');
 		if ($this->getRequest()->isPost()) {
 			$v=new Zend_Validate();
@@ -85,7 +86,7 @@ class LoginController extends Zend_Controller_Action
 					$locale=$this->_t->getLocale();
 					$sender = new Zend_Mail();
 					$sender->addTo($_POST['email'])
-					->setFrom(WEBMAIL, SITO)
+					->setFrom($conf->webmail, $conf->site)
 					->setBodyHtml(
 							str_replace('{link}', $conf->url.$this->view->baseUrl('login/recover/code/'.$code),
 									$message[$locale]['rec']['html']))
@@ -117,7 +118,7 @@ class LoginController extends Zend_Controller_Action
 					$locale=$this->_t->getLocale();
 					$sender = new Zend_Mail();
 					$sender->addTo($user->data['email'])
-					->setFrom(WEBMAIL, SITO)
+					->setFrom($conf->webmail,$conf->site)
 					->setBodyHtml(
 							str_replace(array('{pass}','{user}'), array($pass,$user->data['username']),
 									$message[$locale]['pass']['html']))

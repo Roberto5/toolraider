@@ -32,7 +32,7 @@ class RegController extends Zend_Controller_Action
 					$locale=$this->_t->getLocale();
 					$sender = new Zend_Mail();
 					$sender->addTo($post['email'])
-					->setFrom(WEBMAIL, SITO)
+					->setFrom($conf->webmail,$conf->site)
 					->setBodyHtml(
 							str_replace('{link}', $conf->url.$this->view->baseUrl('reg/active/code/'.$code),
 									str_replace('{user}', $post['username'], $message[$locale]['html'])))
@@ -55,19 +55,19 @@ class RegController extends Zend_Controller_Action
 		$this->_helper->layout->disableLayout();
 		$this->_helper->viewRenderer->setNoRender(true);
 		header("Content-type: application/json");
-		$cerca=$this->_getParam('cerca');
-		$value=$this->_getParam('valore');
-		$db=new Zend_Validate_Db_NoRecordExists(array('table'=>PREFIX.'user','field'=>$cerca));
-		switch ($cerca) {
-			case 'username':
-				$alnum= new Zend_Validate_Alnum();
-				$bool= (($alnum->isValid($value)) && ($db->isValid($value)));
-				break;
-			case 'email';
-			$email=new Zend_Validate_EmailAddress();
-			$bool= (($db->isValid($value)) && ($email->isValid($value)));
-			break;
-			default: $bool=true;
+		$username=$_POST['username'];
+		$email=$_POST['email'];
+		$db=new Zend_Validate_Db_NoRecordExists(array('table'=>PREFIX.'user','field'=>'username'));
+		$bool=true;
+		if ($username) {
+			$alnum= new Zend_Validate_Alnum();
+			$db->setField('username');
+			$bool= (($alnum->isValid($username)) && ($db->isValid($username)));
+		}
+		if ($email) {
+			$db->setField('email');
+			$vemail=new Zend_Validate_EmailAddress();
+			$bool= (($db->isValid($email)) && ($vemail->isValid($email)));
 		}
 		echo json_encode($bool);
 	}
@@ -107,7 +107,7 @@ class RegController extends Zend_Controller_Action
 					if ($conf->email->active) {
 						$sender = new Zend_Mail();
 						$sender->addTo($_POST['email'])
-						->setFrom(WEBMAIL, SITO)
+						->setFrom($conf->webmail,$conf->site)
 						->setBodyHtml(
 								str_replace('{link}', $conf->url.$this->view->baseUrl('reg/active/code/'.$code),
 										str_replace('{user}', $user->data['username'], $message[$locale]['reg']['html'])))

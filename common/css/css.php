@@ -23,7 +23,8 @@ function css_compress ($buffer)
     $buffer = str_replace(' ;', ';', $buffer);
     return $buffer;
 }
-function dump_css_cache ($filename)
+
+function dump_css_cache ($filename,$key=array())
 {
     $cwd = getcwd() . DIRECTORY_SEPARATOR;
     $stat = stat($filename);
@@ -50,6 +51,9 @@ function dump_css_cache ($filename)
         $cache_contents = css_compress(file_get_contents($filename));
         @file_put_contents($current_cache, $cache_contents);
     }
+    foreach ($key as $k => $v) {
+    	$cache_contents=str_replace($k, $v, $cache_contents);
+    }
     return array('text' => $cache_contents, 'mtime' => $stat['mtime']);
 }
 if (isset($_GET['l']) && ($_GET['l'] == 'm')) {
@@ -59,20 +63,29 @@ if (isset($_GET['l']) && ($_GET['l'] == 'm')) {
     $layout = 'style.css';
 }
 $css=array(
-		'jquery.contextmenu.css',
-		'jquery.lightbox-0.5.css',
+//		'jquery.contextmenu.css',
+//		'jquery.lightbox-0.5.css',
 		'jquery-ui.css',
 		'scroll.css');
 
-$r = dump_css_cache($layout);
+$key=array('NORMAL'=>'#2974dd',
+		'HOVER'=>'#49d7ff',
+		'INACTIVE'=>'#0a1723',
+		'ACTIVE'=>'#fff',
+		'INPUT_TEXT'=>'#003d4d',
+		'INPUT_BG'=>'#071221',
+		'REPORT'=>'#024a92',
+		'BORDER'=>'#3eaeee',
+		'BACKGROUND'=>'#071221'
+		);
+$r = dump_css_cache($layout,$key);
 $display = $r['text'];
 $mtime = $r['mtime'];
 foreach ($css as $value) {
-	$r = dump_css_cache($value);
+	$r = dump_css_cache($value,$key);
 	$display .= $r['text'];
 	if ($mtime < $r['mtime']) $mtime = $r['mtime'];
-}    
-//$display.=file_get_contents('jquery-ui-1.8.11.custom.css');
+}
 header('Last-Modified: ' . gmdate('D, d M Y H:i:s', $mtime) . ' GMT');
 echo $display;
 ?>

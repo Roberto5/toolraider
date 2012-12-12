@@ -17,18 +17,22 @@ $file=array(
 		"jquery.contextmenu.js",
 		//uso cokie
 		"jquery.cookie.js",
+		'*validate form*',
+		'jquery.validate.min.js',
 		//presentazione immagini
-		"jquery.lightbox-0.5.min.js",
+		//"jquery.lightbox-0.5.min.js",
 		// scroller
 		"jquery.li-scroller.1.0.js",
 		//toltip
 		//"jquery.tools.min.js",
 		//upload con ajax
 		//"jquery.ajaxupload.3.5.js,"
+		
 		'ship.js',
 		'planet.js',
 		'*main script*',
-		"main.js");
+		"main.js"
+		,'reg.js');
 
 $text="";$mtime=0;
 foreach ($file as $value) {

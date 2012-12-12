@@ -2,6 +2,18 @@
 class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 {
 	/**
+	 * configurazione parametri sito
+	 */
+	protected function _initConfig ()
+	{
+		//error_reporting(E_ERROR | E_WARNING | E_PARSE);
+		$config = new Zend_Config($this->getOptions());
+		Zend_Registry::set('config', $config->toolraider);
+		define('PREFIX', $config->toolraider->prefix);
+		//carico le costanti del server
+		return $config;
+	}
+	/**
 	 * caricamento modelli, form, plugin
 	 */
 	protected function _initAutoload ()
@@ -167,18 +179,6 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 	 // Return it, so that it can be stored by the bootstrap
 	 	return $view;
 	 }
-	 /**
-	 * configurazione parametri sito
-	 */
-	protected function _initConfig ()
-	{
-		//error_reporting(E_ERROR | E_WARNING | E_PARSE);
-		$config = new Zend_Config($this->getOptions());
-		Zend_Registry::set('config', $config->toolraider);
-		//carico le costanti del server
-		return $config;
-	}
-
 }
 
 ?>

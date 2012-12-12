@@ -7,7 +7,6 @@
  */
 
 require_once 'Zend/Db/Table/Abstract.php';
-require_once 'include/costant.php';
 
 class Model_Params extends Zend_Db_Table_Abstract {
 

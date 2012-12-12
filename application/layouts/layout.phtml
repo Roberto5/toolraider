@@ -34,13 +34,14 @@ else{
 	}
 	echo $this->headLink()->prependStylesheet($this->baseUrl() . '/common/css/css.php'.($mobile? '?l=m' : ''));
 	echo $this->headScript()->prependFile($this->baseUrl('/common/js/js.php'));
+	if ($this->t->getLocale()!='en') echo '<script tipe="text/javascript" src="'.$this->baseURL('/common/js/localization/messages_'.$this->t->getLocale().'.js').'"></script>';
 	echo '<script tipe="text/javascript">
 	<!--
 	var path="'.$this->baseUrl().'";
 	//-->
 	</script>';
 	$this->headTitle()->setSeparator(' - ');
-	$this->headTitle(SITE);
+	$this->headTitle($config->site);
 	echo $this->headTitle();
 ?>
 	</head>

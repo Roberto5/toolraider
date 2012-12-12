@@ -42,7 +42,7 @@ back: #071221
 	padding: 3px;
 }
 .navigation li:hover{
-	border: solid 1px #49d7ff;
+	border: solid 1px HOVER;
 	padding:2px;
 }
 .navigation {
@@ -99,37 +99,27 @@ abbr {
 
 input {
 	color: white;
-	background:#0a1723;
-	border: #3eaeee solid 1px;
+	background:BACKGROUND;
+	border: BORDER solid 1px;
 	padding: 2px;
 }
 input:hover,textarea:hover{
-	border: #49d7ff solid 2px;
+	border: HOVER solid 2px;
 	padding: 1px;
 }
 input:focus,textarea:focus{
-	border: #49d7ff solid 2px;
+	border: HOVER solid 2px;
 	padding: 1px;
 }
 select {color: black;}
 optgroup {color: black;}
 textarea {
 	color: white;
-	background:#0a1723;
-	border: #3eaeee solid 1px;
+	background:BACKGROUND;
+	border: #BORDER solid 1px;
 	padding: 2px;
 }
 option {color:black;}
-/*button,input[type="submit"],input[type="button"] {
-	background:#2974dd;
-	color:white;
-	border-radius:4px;
-}
-button:hover,input[type="submit"]:hover,input[type="button"]:hover {
-	background:#3eaeee;
-	color:white;
-	border-radius:4px;
-}*/
 
 /*contact form*/
 
@@ -138,12 +128,43 @@ button:hover,input[type="submit"]:hover,input[type="button"]:hover {
 }
 
 #contact {
-	border: 1px solid #3eaeee;
+	border: 1px solid BORDER;
 	padding: 5px;
-	background: #071221;
+	background: BACKGROUND;
 	margin: 0 auto;
 	width: 350px;
 	text-align: center;
+}
+
+/*reg form*/
+
+#registration_form {
+	width:350px;
+	margin: 0 auto;
+	border: 1px solid BORDER;
+	border-radius: 5px;
+	background:BACKGROUND;
+	padding-left: 40px;
+}
+#registration_form dt {
+	float:left;
+	width: 150px;
+	padding: 4px;
+	
+}
+#registration_form dd {
+	text-align: right;
+	margin: 4px 0;
+	width: 300px;
+	border: 1px solid BORDER;
+	padding: 3px;
+	border-radius: 5px;
+}
+#submit-element {
+	border:0 !important;
+}
+.error{
+	color:red;
 }
 
 /*log*/
@@ -185,37 +206,7 @@ button:hover,input[type="submit"]:hover,input[type="button"]:hover {
 	background-color:white;
 }
 
-/* style avvisi */
 
-.opaco{
-  display: none;
-  position: absolute;
-  top: 0%;
-  left: 0%;
-  width: 2000px;
-  height: 1500px;
-  background-color: black;
-  z-index:1001;
-  -moz-opacity: 0.8;
-  opacity:.60;
-  filter: alpha(opacity=60);
-}
-
-.contenent {
-  color: white;
-  display: none;
-  position: absolute;
-  top: 25%;
-  left: 25%;
-  height: 50%;
-  width: 50%;
-  padding: 16px;
-  border: 10px solid #3B3B3B;
-  background: url(images/center.jpg);
-  background-color: black;
-  z-index:1002;
-  overflow: inherit auto;
-}
 
 /*classe per gli input delle coordinate*/
 .coords{
@@ -233,18 +224,6 @@ button:hover,input[type="submit"]:hover,input[type="button"]:hover {
 .deuterio{
     color: blue;
 }
-
-/*stetistiche*/
-.danni{
-    color: red;
-}
-.guadagno{
-    color: green;
-}
-.stats{
-    color: yellow;
-}
-
 
 /*stile del shiptool 
 @todo da rivedere*/
@@ -266,10 +245,10 @@ span.ship {
 }
 /*ship*/
 table.ship td {
-	background:#024a92;
+	background:REPORT;
 }
 table.ship {
-	border: 1px solid #3eaeee;
+	border: 1px solid BORDER;
 }
 
 div.tabs {
@@ -415,9 +394,9 @@ div.ship.ALIEN {
 .planet{
 	margin: 0 auto;
 	width:300px;
-	border:1px solid #3eaeee;
+	border:1px solid BORDER;
 	border-collapse:collapse;
-	background:#071221;
+	background:BACKGROUND;
 }
 .planet .button {
 	width: 80px;
