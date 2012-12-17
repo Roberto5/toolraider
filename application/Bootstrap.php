@@ -67,13 +67,22 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 		$t = new Zend_Translate_Adapter_Csv(array('content' => APPLICATION_PATH . '/language/en.csv', 'locale' => 'en', 'delimiter' => '@'));
 	 $t->addTranslation(
 	 		array('content' => APPLICATION_PATH . '/language/it.csv',
-	 				'locale' => 'it', 'delimiter' => '@'));
+	 				'locale' => 'it', 'delimiter' => '@'
+	 				,'disableNotices'=>true
+	 				));
 	 	if ($_GET['locale']) {
 	 		setcookie('locale',$_GET['locale'],time()+604800,'/');$_COOKIE['locale']=$_GET['locale'];
 	 	}
+	 	Zend_Registry::set('langnotsup', false);
 	 	try {
-	 		if ($_COOKIE['locale']) $t->setLocale($_COOKIE['locale']);
-	 		else $t->setLocale("browser");
+	 		if (($_COOKIE['locale']=='browser')||!$_COOKIE['locale']) 
+	 			$t->setLocale("browser");
+	 		elseif (in_array($_COOKIE['locale'], $t->getList())) $t->setLocale($_COOKIE['locale']);
+	 		else {
+	 			$t->setLocale("en");
+	 			Zend_Registry::set('langnotsup', true);
+	 		}
+	 		
 	 	}
 	 	catch (Zend_Translate_Exception $e)
 	 	{

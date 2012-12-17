@@ -1,5 +1,5 @@
 <?php
-class Application_Form_Register extends Zend_Form
+class Form_Register extends Zend_Form
 {
     public function init ()
     {
@@ -77,6 +77,10 @@ class Application_Form_Register extends Zend_Form
         'privkey' => '6LeZUsISAAAAAOZITe6cRWgSXKG6X1GfM-1t8_Xo', 
         'captcha' => 'reCaptcha')));
         }
+        //race
+        $race=new Zend_Form_Element_Select('race');
+        $race->addMultiOptions(Model_User::getInstance()->race);
+        $this->addElement($race);
         
         //submit
         $this->addElement('submit', 'submit', 

@@ -13,6 +13,11 @@ class IndexController extends Zend_Controller_Action
 		
     }
 
+    public function creditsAction()
+    {
+        $this->view->key=array('PATH'=>$this->view->baseUrl());
+    }
+
 
 }
 

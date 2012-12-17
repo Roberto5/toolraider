@@ -10,7 +10,7 @@ class RegController extends Zend_Controller_Action
 
 	public function indexAction()
 	{
-		$form = new Application_Form_Register();
+		$form = new Form_Register();
 		$form->setAction($this->view->url(array('controller' => 'reg')));
 		$this->view->form = $form;
 		if ($this->getRequest()->isPost()) {
@@ -50,8 +50,7 @@ class RegController extends Zend_Controller_Action
 	}
 
 	public function ctrlAction()
-	{
-			
+	{	
 		$this->_helper->layout->disableLayout();
 		$this->_helper->viewRenderer->setNoRender(true);
 		header("Content-type: application/json");

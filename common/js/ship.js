@@ -20,7 +20,7 @@ var ship = {
 		});
 		// modal dialog init: custom buttons and a "close" callback reseting the
 		// form inside
-		this.dialog = $("#dialog").dialog({
+		this.dialog = $("#dialogship").dialog({
 			autoOpen : false,
 			modal : true,
 			width : 1000,

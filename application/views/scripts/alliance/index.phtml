@@ -28,7 +28,7 @@ elseif ($this->ally) {// descrizione ally visibile solo agli alleati
 
 ?>
 
-	<table border="1" bgcolor="black">
+	<table border="1">
 		<tr>
 			<td><b>{name}</b></td>
 			<td>{ally_name}</td>
@@ -83,7 +83,65 @@ echo "</map>";*/
 
 }
 else {
-echo '<center>al momento sei senza alleanza, puoi <a href="ally.php?action=cerca">cercarne</a> una o <a href="ally.php?action=crea">crearla</a></center>';
+?>
+<div style="text-align: center;">
+	<div>
+		<button onclick="$('#create').show();">[CREATE] [ALLY]</button>
+		<button onclick="$('#search').show();">[SEARCH] [ALLY]</button>
+	</div>
+	<div id="create" style="display:none;">
+		
+	</div>
+	<div id="search" style="display:none;">
+		<input type="search" id="inputsearch" placeholder="[SEARCH]" />
+		<!-- <button>[SEARCH]</button> -->
+		<p id="list"></p>
+	</div>
+</div>
+
+
+
+<?php 
+	$this->headScript()->captureStart();
+	echo '$(function(){
+		var cache = [];
+		var key=[];
+		$( "#inputsearch" ).autocomplete({
+			minLength: 2,
+			source: function( request, response ) {
+				var term = request.term;
+				var matcher = new RegExp( $.ui.autocomplete.escapeRegex(term), "i" );
+				var need=true;
+				$.each(key,function(k,value){
+					var v=new RegExp( $.ui.autocomplete.escapeRegex(value), "i" );
+					need=need && !v.test(term);
+				});
+				rep=$.ui.autocomplete.filter(cache,term);
+				if (need) {
+					key.push(term);
+					$.getJSON(path+"/alliance/search" , request, function( data, status, xhr ) {
+						$.merge(cache,data);
+						response(data);
+					});
+				}
+				else response(rep);
+			},
+			select:function(e,ui) {
+				name=ui.item.label;
+				id=ui.item.value;
+				this.value=name;
+				$("#list").html(\'<a href="'.$this->baseUrl('/alliance/show/name/').'\'+id+\'">\'+name+\'</a>\');
+				return false;
+			},
+			focus:function(e,ui) {
+				name=ui.item.label;
+				this.value=name;
+				return false;
+			}
+		});
+	});';
+	$this->headScript()->captureEnd();
+	//echo '<center>al momento sei senza alleanza, puoi <a href="ally.php?action=cerca">cercarne</a> una o <a href="ally.php?action=crea">crearla</a></center>';
 
 
 }

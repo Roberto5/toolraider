@@ -27,12 +27,13 @@ $file=array(
 		//"jquery.tools.min.js",
 		//upload con ajax
 		//"jquery.ajaxupload.3.5.js,"
-		
+		'jquery.details.min.js',
 		'ship.js',
 		'planet.js',
 		'*main script*',
 		"main.js"
-		,'reg.js');
+		,'reg.js'
+		,'profile.js');
 
 $text="";$mtime=0;
 foreach ($file as $value) {

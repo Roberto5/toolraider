@@ -8,7 +8,7 @@ echo 'planet.bonus='.json_encode(Model_Planet::$bonus).';';
 $this->headScript()->captureEnd();
 ?>
 
-<div id="dialog" title="[ADD]"><form>
+<div id="dialogplanet" title="[ADD]"><form>
 <?php 
 echo $this->formSelect('galaxy',1,array('class'=>"ui-corner-all"),Model_Planet::$galaxy)
 .$this->formText('name', '', array('placeholder'=>'[NAME]','class'=>"ui-widget-content ui-corner-all",'style'=>'width: 100px;'));

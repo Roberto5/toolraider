@@ -24,7 +24,7 @@ $(document).tooltip({
 	}
 });
 $(function(){
-	planet.dialog=$('#dialog').dialog({
+	planet.dialog=$('#dialogplanet').dialog({
 		autoOpen : false,
 		modal : true,
 		width : 400,

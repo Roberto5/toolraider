@@ -26,26 +26,39 @@ else{
 		<meta name="DESCRIPTION" content="<?php echo $this->t->_('DESCRIPTION');?>" />
 		<meta name="KEYWORDS" content="imperion tools raid" />
 		<link rel="shortcut icon" href="<?php echo $this->baseUrl(); ?>/favicon.ico" /><?php
+$mobile=false;
+if ($config->mobile) {
 	try {
 		$device=$ua->getDevice();
 		$mobile=$device->getFeature('is_mobile');
 	} catch (Zend_Http_UserAgent_Exception $e) {
 		$mobile=true;
 	}
-	echo $this->headLink()->prependStylesheet($this->baseUrl() . '/common/css/css.php'.($mobile? '?l=m' : ''));
-	echo $this->headScript()->prependFile($this->baseUrl('/common/js/js.php'));
-	if ($this->t->getLocale()!='en') echo '<script tipe="text/javascript" src="'.$this->baseURL('/common/js/localization/messages_'.$this->t->getLocale().'.js').'"></script>';
-	echo '<script tipe="text/javascript">
-	<!--
-	var path="'.$this->baseUrl().'";
-	//-->
-	</script>';
-	$this->headTitle()->setSeparator(' - ');
-	$this->headTitle($config->site);
-	echo $this->headTitle();
+}
+echo $this->headLink()->prependStylesheet($this->baseUrl() . '/common/css/css.php'.($mobile? '?l=m' : ''));
+echo $this->headScript()->prependFile($this->baseUrl('/common/js/js.php'));
+if ($this->t->getLocale()!='en') echo '<script tipe="text/javascript" src="'.$this->baseURL('/common/js/localization/messages_'.$this->t->getLocale().'.js').'"></script>';
+echo '<script tipe="text/javascript">
+<!--
+var path="'.$this->baseUrl().'";
+//-->
+</script>';
+$this->headTitle()->setSeparator(' - ');
+$this->headTitle($config->site);
+echo $this->headTitle();
 ?>
 	</head>
 	<body>
+<?php 
+//setcookie('closeadlang','false',time()-604800,'/');$_COOKIE['closeadlang']=true;
+
+if (!in_array($this->t->getLocale(), $this->t->getList()) || (Zend_Registry::get('langnotsup'))&&!$_COOKIE['closeadlang']) {
+	//setcookie('closeadlang','false',time()+604800,'/');$_COOKIE['closeadlang']=true;
+	?>
+	<div class="ui-state-error"><button class="close" onClick="$.cookie('closeadlang','true',{expires:7,path:'/'});$(this).parent().hide();">[CLOSE]</button> [LANGUAGE] <a href="https://github.com/pagliaccio/login">https://github.com/pagliaccio/login</a></div>
+	<?php 
+}
+?>
 		<div id="loader" style="display:none;"><div></div></div>
 		<div id="header"><h1>Toolraider</h1>
 		<ul id="news">
@@ -53,25 +66,26 @@ else{
 			<?php echo $news;?>
 		</ul>
 		</div>
-		<div id="locale">language 
+		<div id="locale">
+			language
 			<form action="<?php echo $this->url();?>">
-				<?php 
+			<?php 
 			$list=array_merge(array('browser'=>'auto'),$this->t->getList());
 			echo $this->formSelect('locale',$_COOKIE['locale'],array('onchange'=>'submit();','id'=>'loc'),$list);
 			?>
 			</form>
 		</div>
 		<div id="container">
-	<?php 
-	if ($this->logger) {
-		$text="<ol>";
-		foreach ($this->logger as $value) {
-			$text.='<li class="priority'.$value['priority'].'"><b>'.$value['info'].'</b> : '.$value['timestamp'].' - '.$value['message'].' - '.$value['priorityName']."</li>";
+		<?php 
+		if ($this->logger) {
+			$text="<ol>";
+			foreach ($this->logger as $value) {
+				$text.='<li class="priority'.$value['priority'].'"><b>'.$value['info'].'</b> : '.$value['timestamp'].' - '.$value['message'].' - '.$value['priorityName']."</li>";
+			}
+			$text.="</ol>";
+			echo $this->template()->spoiler($text,false,'log');
 		}
-		$text.="</ol>";
-		echo $this->template()->spoiler($text,false,'log');
-	}
-	$page=array(
+		$page=array(
 			array('label'=>'Home'
 				,'module'=>'default'
 				,'controller' => 'index'
@@ -102,18 +116,32 @@ else{
 				,'resource'=>'reg'
 				,'privilege'=>'index'
 			)
+			,array('label'=>'[PROFILE]'
+					,'module'=>'default'
+					,'controller' => 'profile'
+					,'action'=>'index'
+					,'order'=>4
+					,'resource'=>'profile'
+			)
+			,array('label'=>'[ALLY]'
+						,'module'=>'default'
+						,'controller' => 'alliance'
+						,'action'=>'index'
+						,'order'=>5
+						,'resource'=>'alliance'
+				)
 			,array('label'=>'Shiptool'
 					,'module'=>'default'
 					,'controller' => 'shiptool'
 					,'action'=>'index'
-					,'order'=>4
+					,'order'=>6
 					,'resource'=>'shiptool'
 			)
 			,array('label'=>'[PLANET_PANNEL]'
 					,'module'=>'default'
 					,'controller' => 'planet'
 					,'action'=>'index'
-					,'order'=>5
+					,'order'=>7
 					,'resource'=>'planet'
 			)
 			,array('label'=>'Credits'

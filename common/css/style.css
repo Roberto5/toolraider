@@ -8,7 +8,31 @@ report #024a92
 text input: #003d4d
 border: #3eaeee
 back: #071221
+
+support html5 tag
 */
+/* <details> and <summary> are block level elements */
+details, summary { display: block; }
+
+/* The following styles will only get applied if JavaScript is enabled and <details> is not natively supported */
+
+/* Add focus styles (for keyboard accessibility) */
+.no-details summary:hover, .no-details summary:focus { background: #ddd; }
+
+/* The following styles are not really needed, since the jQuery script takes care of hiding/displaying the elements. */
+/* However, we’re still gonna use CSS as well to prevent FOUC in browsers that understand these selectors. */
+/* Remember: by default (and probably most of the time), the contents of the <details> element are hidden. */
+
+/* Hide all direct descendants of every <details> element */
+/* Note that IE6 doesn’t support the child selector; we’ll work around that using jQuery later */
+.no-details details > * { display: none; }
+
+/* Make sure summary remains visible */
+.no-details details summary { display: block; }
+
+/* Apply a pointer cursor upon hover to indicate it’s a clickable element. These styles can be applied regardless of whether the fallback is needed */
+summary { cursor: pointer; }
+
 
 /*layout*/
 #header {
@@ -73,8 +97,10 @@ back: #071221
 
 /*tag*/
 body {
-	background-image: url('../img/background.jpg'); background-repeat: repeat;
+	background-image: url('../img/background.jpg'); 
+	background-repeat: repeat;
 	color: white;
+	font-size:13px;
 }
 
 /*link decoration */
@@ -120,6 +146,25 @@ textarea {
 	padding: 2px;
 }
 option {color:black;}
+button {font-size: 12px !important;}
+/*profile*/
+
+.profile {
+	margin:0 auto;
+	width:300px;
+	border: 1px solid BORDER;
+	border-radius:10px;
+}
+.profile td:nth-child(2n) {
+	text-align:right;
+}
+.profile td:nth-child(1):not(.button) {
+	text-align:left;
+	padding-left: 10px;
+}
+.profile input{
+	width:140px;
+}
 
 /*contact form*/
 
@@ -165,6 +210,35 @@ option {color:black;}
 }
 .error{
 	color:red;
+}
+input.error {
+	border:2px solid red;
+}
+
+#loginForm {
+	width:250px;
+	margin: 0 auto;
+	border: 1px solid BORDER;
+	border-radius: 5px;
+	background:BACKGROUND;
+	padding-left: 40px;
+}
+#loginForm dt {
+	float:left;
+	width: 90px;
+	padding: 4px;
+	
+}
+#loginForm dd {
+	text-align: right;
+	margin: 4px 0;
+	width: 200px;
+	border: 1px solid BORDER;
+	padding: 3px;
+	border-radius: 5px;
+}
+tr.password{
+	display:none;
 }
 
 /*log*/
