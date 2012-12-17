@@ -48,5 +48,11 @@ class AllianceController extends Zend_Controller_Action
     	}
     	echo json_encode($value);
     }
+    public function showAction() {
+    	
+    }
+    public function createAction() {
+    	 
+    }
 }
 
