@@ -10,17 +10,22 @@ function length_array($array) {
 	else return '0';
 }
 $form=new Form_Alliance();
+$form->setAction($this->url(array('action'=>'create')))
+	->getElement('server')->setValue(Model_User::getInstance()->server->selected);
+$members="<ol>";
+foreach ($this->ally->members as $value) {
+	$members.='<li class="'.$value['role'].'">'.$value['username']."</li>";
+}
+$members.="</ol>";
 $this->key=array('{ally_name}'=>$this->ally->data['name'],
 		'{name}'=>$this->t->_('NAME'),
 		'{description}'=>$this->t->_('DESCRIPTION2'),
 		'{ally_desc}'=>$this->ally->data['description'],
 		'{member}'=>$this->t->_('MEMBER'),
 		'{num}'=>length_array($this->ally->members),
-		'{table}'=>$form->render()
+		'{table}'=>$form->render(),
+		'{LIST}'=>$members
 );
-
-//Zend_View_Filter_Tmpeng::addkey($this->key);
-
 if ($this->pending) {
 	echo '<center>Sei in attesa che l\'ally {ally_name} ti accetti<br />
 puoi ritirare la richiesta cliccando <a href="'.$this->url(array('action'=>'leave','aid'=>$this->ally->data['id'])).'" >qui</a>
@@ -30,20 +35,26 @@ elseif ($this->ally) {// descrizione ally visibile solo agli alleati
 
 ?>
 
-	<table border="1">
+	<table class="ally" >
 		<tr>
-			<td><b>{name}</b></td>
-			<td>{ally_name}</td>
+			<td><b>{name}</b> : {ally_name}
+				<div><b>{member}</b> : {num}</div>
+			</td>
+			<td><b>{member}</b></td>
 		</tr>
 		<tr>
 			<td><b>{description}</b></td>
-			<td><a href="#">Modifica profilo</a>{ally_desc}</td></tr>
+			<td rowspan="2"><div style="min-height: 200px;text-align: left;">{LIST}</div></td>
+			</tr>
 		<tr>
-			<td><b>{member}</b></td>
-			<td>{num}</td>
+			<td><div style="text-align: right;"><button class="edit">[EDIT]</button></div>
+			<div class="ally"><div>{ally_desc}</div><textarea cols="28" rows="15" class="ally">{ally_desc}</textarea></div>
+			</td>
 		</tr>
 <!-- lista utenti -->
 </table>
+
+
 
 <?php /* @todo ri implementare mappa
 <a href="map.php?ally=".$ally."&resize=1&g=1" rel="thumbnail" title="mappa">

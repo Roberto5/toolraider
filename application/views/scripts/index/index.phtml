@@ -1,7 +1,10 @@
-<?php 
-//init
-
+<form method="post" style="margin:0 auto;width: 200px;">
+<?php
+if ($this->auth->hasIdentity()) {
+	echo $this->FormSelect('server',$this->server,null,Model_Server::$list).$this->FormSubmit('submit','submit');
+}
 ?>
+</form>
 
 <sumary style="text-align:center;"><h2><?php echo $this->t->_('CONTACT');?></h2>
 <details>

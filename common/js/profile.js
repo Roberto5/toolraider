@@ -2,13 +2,13 @@
  * 
  */
 $(function(){
-	$('button.edit').unbind('click').click(function() {
+	$('button.edit.profile').unbind('click').click(function() {
 		profile.edit($(this).parent().parent());
 		return false;
 	}
 	);
 	//email_validator={optional:function(e){return false;},email:jQuery.validator.methods.email};
-	$('.profile').validate({
+	$('form.profile').validate({
 		submitHandler:function() {
 			
 			
@@ -86,10 +86,13 @@ var profile={
 	},
 	send:function(row) {
 		i=row.find('input,select,textarea').hide();
-		if (i.is('select')) v=i.find('option:selected').text();
-		else v=i.val();
+		if (i.is('select')) {
+			v=i.find('option:selected').val();
+			label=i.find('option:selected').text();
+		}
+		else {v=i.val();label=i.val();}
 		
-		row.find('span:eq(0)').show().text(v);
+		row.find('span:eq(0)').show().text(label);
 		button=row.find('button');
 		button.unbind('click').click(function(){
 			profile.edit($(this).parent().parent());

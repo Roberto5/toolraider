@@ -142,7 +142,7 @@ optgroup {color: black;}
 textarea {
 	color: white;
 	background:BACKGROUND;
-	border: #BORDER solid 1px;
+	border: BORDER solid 1px;
 	padding: 2px;
 }
 option {color:black;}
@@ -210,6 +210,16 @@ button {font-size: 12px !important;}
 }
 .error{
 	color:red;
+}
+div.error{
+	text-align: center;
+}
+.error pre {
+	width: 100%;
+	overflow: scroll;
+	text-align: left;
+	border: 1px solid red;
+	background: black;
 }
 input.error {
 	border:2px solid red;
@@ -461,6 +471,32 @@ div.ship.ALIEN {
 }
 .Architeuthis{
 	background-position: -104px 0 !important;
+}
+/*ally page*/
+
+table.ally {
+	width:500px;
+	margin:0 auto; 
+	border:1px solid BORDER;
+	background:BACKGROUND
+}
+.ally td {
+	border:1px solid BORDER;
+	width:250px;
+}
+div.ally {
+	min-height: 200px;
+}
+.ally li {
+	padding:1px;
+	margin-right: 5px;
+}
+.ally li:hover {
+	border:1px solid HOVER;
+	padding:0;
+}
+.ally textarea{
+	display:none;
 }
 
 /*planet page*/

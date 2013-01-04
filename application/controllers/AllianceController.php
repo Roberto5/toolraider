@@ -43,8 +43,10 @@ class AllianceController extends Zend_Controller_Action
     	$this->_helper->viewRenderer->setNoRender(true);
     	$term=$_GET['term'];
     	$value=array();
-    	for ($i = 0; $i < 10; $i++) {
-    		$value[]=array('label'=>$term.rand(0, 5).rand(5, 10),'value'=>$i);
+    	$server=$this->user->server->selected;
+    	$ally=$this->user->ally->fetchAll("`server`='$server'");
+    	foreach ($ally as $v) {
+    		$value[]=array('label'=>$v['name'],'value'=>$v['id']);
     	}
     	echo json_encode($value);
     }
@@ -52,7 +54,22 @@ class AllianceController extends Zend_Controller_Action
     	
     }
     public function createAction() {
-    	 
+    	$this->view->option=array('sec'=>5,'link'=>$this->view->baseUrl('/alliance'));
+    	$form=new Form_Alliance();
+    	if ($form->isValid($_POST)) {
+    		$this->view->option['type']=1;
+    		$this->view->option['text']='[DONE]';
+    		$aid=$this->user->ally->insert($form->getValues());
+    		$this->_log->debug($aid);
+    		$this->_db->insert(PREFIX.'user_ally', array('aid'=>$aid,'uid'=>$this->user->data['id'],'server'=>$this->user->server->selected));
+    		$this->_db->insert(PREFIX.'ally_role', array('aid'=>$aid,'uid'=>$this->user->data['id'],'role'=>'FOUNDER'));
+    	}
+    	else {
+    		$this->view->option['type']=2;
+    		$this->view->option['text']='[DATA_ERROR]';
+    		$this->view->option['link']=null;
+    		$this->view->form=$form->populate($_POST);
+    	}
     }
 }
 

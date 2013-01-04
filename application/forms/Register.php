@@ -79,7 +79,7 @@ class Form_Register extends Zend_Form
         }
         //race
         $race=new Zend_Form_Element_Select('race');
-        $race->addMultiOptions(Model_User::getInstance()->race);
+        $race->addMultiOptions(Model_User::getInstance()->race)->setLabel('RACE');
         $this->addElement($race);
         
         //submit

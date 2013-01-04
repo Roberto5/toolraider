@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generato il: Nov 11, 2012 alle 01:39
+-- Generato il: Dic 18, 2012 alle 19:28
 -- Versione del server: 5.5.28
 -- Versione PHP: 5.3.10-1ubuntu3.4
 
@@ -31,8 +31,10 @@ CREATE TABLE `tr_ally` (
   `id` int(6) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(30) COLLATE utf8_bin NOT NULL,
   `description` text COLLATE utf8_bin NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+  `server` int(4) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `server` (`server`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
 
@@ -94,9 +96,11 @@ CREATE TABLE `tr_planet` (
   `system` int(15) unsigned NOT NULL,
   `galaxy` int(1) NOT NULL DEFAULT '1',
   `bonus` text COLLATE utf8_bin NOT NULL,
-  `type` int(1) NOT NULL,
+  `type` varchar(20) COLLATE utf8_bin NOT NULL,
+  `server` int(4) NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `uid` (`uid`)
+  KEY `uid` (`uid`),
+  KEY `server` (`server`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
@@ -111,6 +115,21 @@ CREATE TABLE `tr_role` (
   `role` varchar(30) COLLATE utf8_bin NOT NULL DEFAULT 'user',
   PRIMARY KEY (`uid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+-- --------------------------------------------------------
+
+--
+-- Struttura della tabella `tr_server`
+--
+
+DROP TABLE IF EXISTS `tr_server`;
+CREATE TABLE `tr_server` (
+  `id` int(4) NOT NULL AUTO_INCREMENT,
+  `name` varchar(10) NOT NULL,
+  `url` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name` (`name`,`url`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -144,15 +163,23 @@ CREATE TABLE `tr_user` (
   `code_time` int(32) NOT NULL,
   `aid` int(6) unsigned DEFAULT NULL,
   `race` int(1) NOT NULL,
+  `server` int(4) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`),
   UNIQUE KEY `email` (`email`),
-  KEY `ally` (`aid`)
+  KEY `ally` (`aid`),
+  KEY `server` (`server`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
 -- Limiti per le tabelle scaricate
 --
+
+--
+-- Limiti per la tabella `tr_ally`
+--
+ALTER TABLE `tr_ally`
+  ADD CONSTRAINT `tr_ally_ibfk_1` FOREIGN KEY (`server`) REFERENCES `tr_server` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Limiti per la tabella `tr_ally_pact`
@@ -172,6 +199,7 @@ ALTER TABLE `tr_ally_role`
 -- Limiti per la tabella `tr_planet`
 --
 ALTER TABLE `tr_planet`
+  ADD CONSTRAINT `tr_planet_ibfk_2` FOREIGN KEY (`server`) REFERENCES `tr_server` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `tr_planet_ibfk_1` FOREIGN KEY (`uid`) REFERENCES `tr_user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --

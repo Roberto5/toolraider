@@ -34,6 +34,7 @@ class Model_User extends Zend_Db_Table_Abstract {
 	 */
 	public $planet;
 	public $race=array('TITAN','XEN','TERRAN');
+	public $server;
 	function __construct ($option)
 	{
 		$this->_name=PREFIX.'user';
@@ -43,13 +44,13 @@ class Model_User extends Zend_Db_Table_Abstract {
 		else throw new Zend_Db_Table_Exception(' $option params is not int or array');
 		$this->data= $this->fetchRow($query);
 		$id=intval($this->data['id']);
-		if ($this->data['aid']) {
-			$this->ally=new Model_Ally($this->data['aid']);
-			$this->role=$this->getAdapter()->fetchOne("SELECT `role` FROM `".PREFIX."ally_role` WHERE `uid`='".$id."'");
-		}
+		$aid=$this->getAdapter()->fetchOne("SELECT `aid` FROM `".PREFIX."user_ally` WHERE `server`='".$this->data['server']."' AND `uid`='$id'");
+		$this->ally=new Model_Ally($aid);
+			
 		$this->planet=new Model_Planet($id);
 		$key=array_keys($this->planet->toArray());
 		$this->ship=new Model_Ship($key);
+		$this->server=new Model_Server($this->data['server']);
 		self::$instance=$this;
 	}
 	static function getInstance($option=0) {

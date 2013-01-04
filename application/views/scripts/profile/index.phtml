@@ -10,7 +10,7 @@
 <?php 
 if ($this->can) {
 ?>
-    <td><button class="edit">[EDIT]</button></td>
+    <td><button class="edit profile">[EDIT]</button></td>
 <?php 
 }
 ?>
@@ -18,7 +18,7 @@ if ($this->can) {
   <tr id="email">
     <td>Email :</td>
     <td><span>EMAIL</span><input name="email" type="email" required="required" style="display:none;" value="EMAIL" /></td>
-    <td><button class="edit">[EDIT]</button></td>
+    <td><button class="edit profile">[EDIT]</button></td>
   </tr>
 <?php 
 foreach ($this->option as $key => $value) {
@@ -33,7 +33,7 @@ foreach ($this->option as $key => $value) {
 	echo $this->$helper($key,$value['value'],$value['attr'],$value['option']);
 	//$h=new Zend_View_Helper_FormSelect();$h->formSelect($name);
 	//		<input '.(?'required="required"':'').' name="'.$key.'" style="display:none;" value="'.$value['value'].'" /></td>
-	echo'<td><button class="edit">[EDIT]</button></td>
+	echo'<td><button class="edit profile">[EDIT]</button></td>
 	</tr>';
 }
 ?>

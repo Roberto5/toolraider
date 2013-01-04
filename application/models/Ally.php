@@ -7,7 +7,7 @@
  */
 
 require_once 'Zend/Db/Table/Abstract.php';
-require_once 'include/costant.php';
+//require_once 'include/costant.php';
 
 class Model_Ally extends Zend_Db_Table_Abstract {
 	public $_name;
@@ -21,7 +21,12 @@ class Model_Ally extends Zend_Db_Table_Abstract {
 		elseif (is_array($config)) $query=$config;
 		$this->data= $this->fetchRow($query);
 		$id=$this->data['id'];
-		$this->members=$this->getAdapter()->fetchAll("SELECT `username`,`uid`,`role` FROM `".PREFIX."user`,`".PREFIX."ally_role` WHERE `".PREFIX."user`.`aid`='$id' AND `".PREFIX."user`.`id`=`uid`");
+		$this->members=$this->getAdapter()
+			->fetchAll("SELECT `username`,`".PREFIX."user`.`id`,`role` 
+			FROM `".PREFIX."user`,`".PREFIX."ally_role`,`".PREFIX."user_ally` 
+			WHERE `".PREFIX."user_ally`.`aid`='$id' 
+			AND `".PREFIX."user`.`id`=`".PREFIX."user_ally`.`uid` 
+			AND `".PREFIX."ally_role`.`uid`=`".PREFIX."user`.`id`");
 		$this->pact=$this->getAdapter()->fetchAll("SELECT * FROM `".PREFIX."ally_pact` WHERE `aid`='$id' OR `aid2`='$id'");
 	}
 	function addMember($uid) {
