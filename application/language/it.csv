@@ -88,3 +88,9 @@ LANGUAGE@Il tuo linguaggio non è supportato, puoi aggiungere una traguzione and
 RACE@Razza
 ALLY@Alleanza
 SEARCH@Cerca
+FOUNDER@Fondatore
+ADVISOR@Consigliere
+WAIT@In attesa
+MEMBER@Membro
+ERROR_APP@Impossibile chiedere di entrare in questa alleanza, controlla di non aver già chiesto il permesso di entrare
+C403@Non puoi compiere questa azione

@@ -98,7 +98,7 @@ var profile={
 			profile.edit($(this).parent().parent());
 			return false;
 		});
-		$('.button button:eq(0)').button('option','icons',{
+		button.button('option','icons',{
 			primary:'ui-icon-wrench'
 		});
 		request('/profile/edit',{key:row.attr('id'),value:v},false,true);

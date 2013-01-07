@@ -147,7 +147,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 	 * applica i plugin acl
 	 *
 	 */
-	 protected function _initController ()
+	 protected function _initController()
 	 {
 	 	require_once APPLICATION_PATH.'/plugin/acl_controller.php';
 	 	require_once APPLICATION_PATH.'/plugin/myTmpEng.php';

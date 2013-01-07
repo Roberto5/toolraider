@@ -99,6 +99,7 @@ summary { cursor: pointer; }
 body {
 	background-image: url('../img/background.jpg'); 
 	background-repeat: repeat;
+	background-color: black;
 	color: white;
 	font-size:13px;
 }
@@ -495,10 +496,18 @@ div.ally {
 	border:1px solid HOVER;
 	padding:0;
 }
-.ally textarea{
+.ally textarea {
 	display:none;
 }
-
+.FOUNDER {
+	background:url('../img/founder.png') no-repeat right;
+}
+.ADVISOR {
+	background:url('../img/founder.png') no-repeat right;
+}
+.WAIT {
+	background:red;
+}
 /*planet page*/
 
 .planet{

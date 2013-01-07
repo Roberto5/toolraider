@@ -7,12 +7,17 @@ $acl->addRole(new Zend_Acl_Role("user"));//da decidere
 $acl->addRole(new Zend_Acl_Role("staff"),"user");
 $acl->addRole(new Zend_Acl_Role("debuger"),"staff");//privilegi di debug, visualizzazione log e debug tool
 $acl->addRole(new Zend_Acl_Role("admin"));//tutti i privilegi
+//alleanza
+$acl->addRole(new Zend_Acl_Role('NONE'),'user');
+$acl->addRole(new Zend_Acl_Role('WAIT'),'NONE');
+$acl->addRole(new Zend_Acl_Role('MEMBER'),'WAIT');
+$acl->addRole(new Zend_Acl_Role('ADVISER'),'MEMBER');
+$acl->addRole(new Zend_Acl_Role('FOUNDER'),'user');
 
 //modulo
 $acl->addResource("default");
 $acl->addResource('admin');
 //creazione risorsa
-
 //controller
 $acl->addResource("log");
 $acl->addResource('login','default');
@@ -42,6 +47,27 @@ $acl->allow('user','default');
 $acl->deny('user','login','index');
 $acl->deny('user','reg','index');
 //$acl->allow('user','profile');
+
+//permessin NONE
+$acl->deny('NONE','alliance','edit');
+$acl->deny('NONE','alliance','profile');
+$acl->deny('NONE','alliance','editname');
+$acl->deny('NONE','alliance','read');
+$acl->deny('NONE','alliance','write');
+$acl->deny('NONE','alliance','privilege');
+$acl->deny('NONE','alliance','recruit');
+//permessi wait
+$acl->allow('WAIT','alliance','profile');;
+
+//permessi member
+$acl->allow('MEMBER','alliance','read');
+
+//permessi adviser
+$acl->allow('ADVISER','alliance','edit');
+$acl->allow('ADVISER','alliance','write');
+$acl->allow('ADVISER','alliance','recruit');
+//permessi founder
+
 
 //permessi staff
 //@todo definire permessi staff

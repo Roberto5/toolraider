@@ -49,3 +49,9 @@ LANGUAGE@Your language is not supported, you can add a translate on
 RACE@Race
 ALLY@Alliance
 SEARCH@Search
+FOUNDER@Founder
+ADVISOR@Advisor
+WAIT@In waiting
+MEMBER@Member
+ERROR_APP@You can't send application for this alliance, controll you enter's request
+C403@You can't do this action

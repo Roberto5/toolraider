@@ -1,4 +1,6 @@
 <?php 
+$role=Model_AllyRole::getRole();
+$this->log->debug($role);
 function length_array($array) {
 	if (is_array($array)) {
 		$n=0;
@@ -14,7 +16,13 @@ $form->setAction($this->url(array('action'=>'create')))
 	->getElement('server')->setValue(Model_User::getInstance()->server->selected);
 $members="<ol>";
 foreach ($this->ally->members as $value) {
-	$members.='<li class="'.$value['role'].'">'.$value['username']."</li>";
+	$members.='<li title="['.$value['role'].']" class="'.$value['role'].'">'.$value['username'];
+	$this->log->debug($this->acl->isAllowed($role,'alliance','recruit'),'recruit');
+	if ($value['role']=='WAIT' && $this->acl->isAllowed($role,'alliance','recruit'))
+		$members.= '<button style="width: 11px;height: 11px;" id="ok'.$value['id'].'" class="ok">Ok</button>';
+	if (($value[id]==Model_User::getInstance()->data['id'])||$this->acl->isAllowed($role,'alliance','privilege')||($value['role']=='WAIT' && $this->acl->isAllowed($role,'alliance','recruit')))
+		$members.= '<button style="width: 11px;height: 11px;" id="delete'.$value['id'].'" class="delete">[DELETE]</button>';
+	$members.= '</li>';
 }
 $members.="</ol>";
 $this->key=array('{ally_name}'=>$this->ally->data['name'],
@@ -26,18 +34,21 @@ $this->key=array('{ally_name}'=>$this->ally->data['name'],
 		'{table}'=>$form->render(),
 		'{LIST}'=>$members
 );
-if ($this->pending) {
-	echo '<center>Sei in attesa che l\'ally {ally_name} ti accetti<br />
-puoi ritirare la richiesta cliccando <a href="'.$this->url(array('action'=>'leave','aid'=>$this->ally->data['id'])).'" >qui</a>
-</center>';
-}
-elseif ($this->ally) {// descrizione ally visibile solo agli alleati
 
+
+if ($this->acl->isAllowed($role,'alliance','profile')) {// descrizione ally visibile solo agli alleati
+
+	
 ?>
 
 	<table class="ally" >
 		<tr>
-			<td><b>{name}</b> : {ally_name}
+			<td><b>{name}</b> : {ally_name} 
+<?php 
+if ($this->acl->isAllowed($role,'alliance','editname')) {
+	echo '<button id="name" class="edit">[EDIT]</button>';
+}
+?>
 				<div><b>{member}</b> : {num}</div>
 			</td>
 			<td><b>{member}</b></td>
@@ -47,7 +58,11 @@ elseif ($this->ally) {// descrizione ally visibile solo agli alleati
 			<td rowspan="2"><div style="min-height: 200px;text-align: left;">{LIST}</div></td>
 			</tr>
 		<tr>
-			<td><div style="text-align: right;"><button class="edit">[EDIT]</button></div>
+			<td><div style="text-align: right;"><?php 
+if ($this->acl->isAllowed($role,'alliance','edit')) {
+	echo '<button style="width: 12px;height: 12px;" id="desc" class="edit">[EDIT]</button>';
+}
+			?></div>
 			<div class="ally"><div>{ally_desc}</div><textarea cols="28" rows="15" class="ally">{ally_desc}</textarea></div>
 			</td>
 		</tr>

@@ -4,7 +4,7 @@ $(function(){
 	$('.no-details details').details();
 	//**************
 	$("ul#news").liScroll();
-	$("button:not(.close):not(.edit):not(.add):not(.delete),input[type=submit]:not(.edit):not(.add):not(.delete)").button();
+	$("button:not(.close):not(.edit):not(.ok):not(.add):not(.delete),input[type=submit]:not(.edit):not(.add):not(.delete)").button();
 	$("button.edit").button({icons: {
         primary: "ui-icon-wrench"
     },
@@ -24,7 +24,12 @@ $(function(){
         	primary: "ui-icon-close"
     	},
     		text: false
-    });;
+    });
+	$("button.ok").button({icons: {
+    	primary: "ui-icon-check"
+	},
+		text: false
+});
     $('option').addClass('ui-widget-content');
     $('select').addClass('ui-state-default ui-corner-all')
     	.bind('mouseover',function(){
@@ -61,7 +66,10 @@ function request(url,data,callback,reload) {
 			loader.hide();
 			if (!data.success) {
 				alert(data.message);
-				if (reload) location.reload();
+				if (reload && reload!="success") location.reload();
+			}
+			else {
+				if (reload=="success") location.reload();
 			}
 			if (callback) callback(data);
 		},

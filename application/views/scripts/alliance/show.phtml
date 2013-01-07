@@ -1,0 +1,44 @@
+<?php
+function length_array($array) {
+	if (is_array($array)) {
+		$n=0;
+		foreach ($array as $value) {
+			$n++;
+		}
+		return $n;
+	}
+	else return '0';
+}
+$members="<ol>";
+foreach ($this->ally->members as $value) {
+	$members.='<li title="['.$value['role'].']" class="'.$value['role'].'">'.$value['username'].'</li>';
+}
+$members.="</ol>";$this->log->debug($this->ally);
+$this->key=array('{ally_name}'=>$this->ally->data['name'],
+		'{ally_desc}'=>$this->ally->data['description'],
+		'{num}'=>length_array($this->ally->members),
+		'{LIST}'=>$members,
+		'{AID}'=>$this->ally->data['id']
+);
+?>
+
+	<table class="ally" >
+		<tr>
+			<td><b>[NAME]</b> : {ally_name} 
+				<div><b>[MEMBER]</b> : {num}</div>
+			</td>
+			<td><b>[MEMBER]</b></td>
+		</tr>
+		<tr>
+			<td><b>[DESCRIPTION2]</b></td>
+			<td rowspan="2"><div style="min-height: 200px;text-align: left;">{LIST}</div>
+			<button id="enter{AID}" class="enter" style="width: 250px;">[ENTER]</button>
+			</td>
+			</tr>
+		<tr>
+			<td><div style="text-align: right;"></div>
+			<div class="ally"><div>{ally_desc}</div><textarea cols="28" rows="15" class="ally">{ally_desc}</textarea></div>
+			</td>
+		</tr>
+<!-- lista utenti -->
+</table>

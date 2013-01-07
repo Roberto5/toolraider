@@ -33,7 +33,8 @@ $file=array(
 		'*main script*',
 		"main.js"
 		,'reg.js'
-		,'profile.js');
+		,'profile.js'
+		,'ally.js');
 
 $text="";$mtime=0;
 foreach ($file as $value) {
